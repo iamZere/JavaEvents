@@ -2,7 +2,7 @@ package com.example;
 
 public class Direccion{
     private String calle;
-    private integer numero;
+    private Integer numero;
     private String ciudad;
     private String codigoPostal;
 
