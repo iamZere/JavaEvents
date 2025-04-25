@@ -1,19 +1,20 @@
 package com.example;
 
-public class Clientes {
+public class Cliente {
 
     private String nombre;//nombre del cliente
     private String correo;//correo del cliente
     private String clave;//clave del cliente
     private String telefono;//telefono asociado al cliente
-    private Boolean vip;//si el cliente es parte del programa VIP o no
+    private Boolean esVip;//Inidica si el cliente es parte del grupo VIP o no
 
-    public Clientes(String nombre, String correo, String clave, String telefono, Boolean vip) {
+    // Constructor
+    public Cliente(String nombre, String correo, String clave, String telefono, Boolean esVip) {
         this.nombre = nombre;
         this.correo = correo;
         this.clave = clave;
         this.telefono = telefono;
-        this.vip = vip;
+        this.esVipip = false; //de manera predeterminada, todos los usuarios NO forman parte del grupo VIP
     }
 
     public String getNombre() {
@@ -48,12 +49,12 @@ public class Clientes {
         this.telefono = telefono;
     }
 
-    public Boolean getVip() {
-        return vip;
+    public Boolean esVip() {
+        return esVip;
     }
 
-    public void setVip(Boolean vip) {
-        this.vip = vip;
+    public void setesVip(Boolean esVip) {
+        this.esVipvip = esVipvip;
     }
 
     @Override

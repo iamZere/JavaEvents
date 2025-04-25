@@ -90,7 +90,48 @@ public class Evento {
         this.calificacion = calificacion;
     }
 
-    public String mostrarInformacion() {
-        return "Título: " + titulo + "\n" + "Tipo: " + tipo + "\n" + "Dirección: " + direccion + "\n" +"Fecha: " + fecha.toString() + "\n" +"Precio: $" + precio + "\n" +"Calificación: " + calificacion + "/5";
-    }       
+    //Metodo para validar los datos del evento. Este metodo lanza una excepción si alguno de los datos no es válido o si no se ha introducido
+    public validarEvento() {
+        if (titulo == null || titulo.isEmpty()) {
+            throw new IllegalArgumentException("El título no puede estar vacío.");
+        }
+        else if (tipo == null || tipo.isEmpty()) {
+            throw new IllegalArgumentException("El tipo no puede estar vacío.");
+        }
+        else if (descripcion == null || descripcion.isEmpty()) {
+            throw new IllegalArgumentException("La descripción no puede estar vacía.");
+        }
+        else if (lugar == null || lugar.isEmpty()) {
+            throw new IllegalArgumentException("El lugar no puede estar vacío.");
+        }
+        else if (fecha == null) {
+            throw new IllegalArgumentException("La fecha no puede ser nula.");
+        }
+        else if (precio < 0) {
+            throw new IllegalArgumentException("El precio no puede ser negativo.");
+        }
+        else if (direccionImagen == null || direccionImagen.isEmpty()) {
+            throw new IllegalArgumentException("La dirección de la imagen no puede estar vacía.");
+        }
+        else if (calificacion < 1 || calificacion > 5) {
+            throw new IllegalArgumentException("La calificación debe estar entre 1 y 5.");
+        }
+    }
+
+    //Metodo para calcular el promedio de nota del evento. 
+
+    // Método toString para mostrar el evento
+    @Override
+    public String toString() {
+        return "Evento{" +
+                "titulo='" + titulo + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", lugar='" + lugar + '\'' +
+                ", fecha=" + fecha +
+                ", precio=" + precio +
+                ", direccionImagen='" + direccionImagen + '\'' +
+                ", calificacion=" + calificacion +
+                '}';
+    }
 }
