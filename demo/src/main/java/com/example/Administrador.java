@@ -1,8 +1,8 @@
 package com.example;
 
 public class Administrador{
-    private String correo;
-    private String clave;
+    private String correo;//correo unico del administrador
+    private String clave;//clave asociada al administrador
 
     public Administrador(String correo, String clave) {
         this.correo = correo;
@@ -26,5 +26,4 @@ public class Administrador{
         this.clave = clave;
     }
 
-    
 }

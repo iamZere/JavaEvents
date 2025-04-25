@@ -1,9 +1,9 @@
 package com.example;
 
 public class TarjetaCredito{
-    private String nombreTitular;
-    private String numeroTarjeta;
-    private String fechaCaducidad;
+    private String nombreTitular;//nombre del titular de la tarjeta
+    private String numeroTarjeta;//numero de la tarjeta
+    private String fechaCaducidad;//fecha de caducidad de la tarjeta
 
     public TarjetaCredito(String nombreTitular, String numeroTarjeta, String fechaCaducidad) {
         this.nombreTitular = nombreTitular;

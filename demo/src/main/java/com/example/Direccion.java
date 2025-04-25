@@ -1,10 +1,10 @@
 package com.example;
 
 public class Direccion{
-    private String calle;
-    private Integer numero;
-    private String ciudad;
-    private String codigoPostal;
+    private String calle;//nombre de la calle
+    private Integer numero;//numero del domicilio
+    private String ciudad;//nombre de la ciudad
+    private String codigoPostal;//codigo postal de la ciudad
 
     public Direccion(String calle, int numero, String ciudad, String codigoPostal) {
         this.calle = calle;

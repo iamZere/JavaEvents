@@ -2,11 +2,11 @@ package com.example;
 
 public class Clientes {
 
-    private String nombre;
-    private String correo;
-    private String clave;
-    private String telefono;
-    private Boolean vip;
+    private String nombre;//nombre del cliente
+    private String correo;//correo del cliente
+    private String clave;//clave del cliente
+    private String telefono;//telefono asociado al cliente
+    private Boolean vip;//si el cliente es parte del programa VIP o no
 
     public Clientes(String nombre, String correo, String clave, String telefono, Boolean vip) {
         this.nombre = nombre;
