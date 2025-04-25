@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.Map;
+
 public class Administrador{
     private String correo;//correo unico del administrador
     private String clave;//clave asociada al administrador
@@ -27,6 +29,7 @@ public class Administrador{
         this.clave = clave;
     }
 
+    // Gestion de eventos
     public void crearEvento(Evento evento) {
         // Lógica para crear un evento
     }
@@ -39,12 +42,30 @@ public class Administrador{
         // Lógica para modificar un evento
     }
 
+    // Consulta de eventos
     public void verEventos() {
         // Lógica para ver eventos
     }
 
+    public void buscarEventosPorCriterios(Map<String, String> criterios) {
+        // Implementación para buscar eventos combinando varios criterios
+    }
+
+    // Consulta de usuarios
     public void darVipCliente(Cliente cliente) {
         // Lógica para dar VIP a un cliente
     }
 
+    public void verClientes(Cliente cliente) {
+        // Lógica para ver clientes
+    }
+    public void buscarClientesPorCriterios(Map<String, String> criterios) {
+        // Implementación para buscar clientes combinando varios criterios
+    }
+
+    // Consulta de reservas
+    public void verReservas() {
+        // Lógica para ver reservas (tienen que estar ordenadas por fecha)
+    }
+    // Opcion volutaria - seleccionar todas las reservas o solo a partir de una fecha específica (fecha en la que se hizo la reserva)
 }
