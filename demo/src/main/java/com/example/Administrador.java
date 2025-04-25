@@ -1,6 +1,6 @@
 package com.example;
 
-import java.util.Map;
+import java.util.Map; // Permite manejar pares clave-valor, como en la busqueda de eventos y clientes por criterios específicos
 
 public class Administrador{
     private String correo;//correo unico del administrador
