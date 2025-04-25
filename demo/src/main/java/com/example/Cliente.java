@@ -14,7 +14,7 @@ public class Cliente {
         this.correo = correo;
         this.clave = clave;
         this.telefono = telefono;
-        this.esVipip = false; //de manera predeterminada, todos los usuarios NO forman parte del grupo VIP
+        this.esVip = false; //de manera predeterminada, todos los usuarios NO forman parte del grupo VIP
     }
 
     public String getNombre() {
@@ -54,7 +54,7 @@ public class Cliente {
     }
 
     public void setesVip(Boolean esVip) {
-        this.esVipvip = esVipvip;
+        this.esVip = esVip;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Cliente {
                 ", correo='" + correo + '\'' +
                 ", clave='" + clave + '\'' +
                 ", telefono='" + telefono + '\'' +
-                ", vip=" + vip +
+                ", vip=" + esVip +
                 '}';
         }
 }
