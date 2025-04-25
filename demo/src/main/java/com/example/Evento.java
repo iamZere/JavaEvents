@@ -66,7 +66,7 @@ public class Evento {
         this.fecha = fecha;
     }
 
-    public Integer getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
@@ -82,7 +82,7 @@ public class Evento {
         this.direccionImagen = direccionImagen;
     }
 
-    public Integer getCalificacion() {
+    public double getCalificacion() {
         return calificacion;
     }
 
@@ -91,7 +91,7 @@ public class Evento {
     }
 
     //Metodo para validar los datos del evento. Este metodo lanza una excepción si alguno de los datos no es válido o si no se ha introducido
-    public validarEvento() {
+    public void validarEvento() {
         if (titulo == null || titulo.isEmpty()) {
             throw new IllegalArgumentException("El título no puede estar vacío.");
         }
