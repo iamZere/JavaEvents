@@ -9,7 +9,7 @@ public class Cliente {
     private String correo;//Correo del cliente
     private String clave;//Clave del cliente
     private String telefono;//Telefono asociado al cliente
-    private Boolean esVip;//Inidica si el cliente es parte del grupo VIP o no
+    private Boolean esVip;//Indica si el cliente es parte del grupo VIP o no
     private List<Reserva> reservas;//Lista de reservas asociadas al cliente
 
     // Constructor

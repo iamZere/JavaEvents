@@ -3,8 +3,8 @@ package com.example;
 import java.util.Map; // Permite manejar pares clave-valor, como en la busqueda de eventos y clientes por criterios específicos
 
 public class Administrador{
-    private String correo;//correo unico del administrador
-    private String clave;//clave asociada al administrador
+    private String correo;//Correo unico del administrador
+    private String clave;//Clave asociada al administrador
     private 
 
     public Administrador(String correo, String clave) {
