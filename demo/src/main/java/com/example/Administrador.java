@@ -5,9 +5,9 @@ import java.util.Map; // Permite manejar pares clave-valor, como en la busqueda 
 public class Administrador{
     private String correo;//Correo unico del administrador
     private String clave;//Clave asociada al administrador
-    private 
 
-    public Administrador(String correo, String clave) {
+
+    private Administrador(String correo, String clave) {
         this.correo = correo;
         this.clave = clave;
     }
