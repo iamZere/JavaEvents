@@ -66,4 +66,3 @@ public class TarjetaCredito implements Serializable {
                 ", fechaCaducidad='" + fechaCaducidad + '\'' +
                 '}';
     }
-    }
