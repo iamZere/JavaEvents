@@ -119,6 +119,7 @@ public class Evento {
     }
 
     //Metodo para calcular el promedio de nota del evento. 
+    
 
     // Método toString para mostrar el evento
     @Override

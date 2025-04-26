@@ -1,11 +1,21 @@
 package com.example;
 
-public class TarjetaCredito{
+public class TarjetaCredito implements Serializable {
     private String nombreTitular;//nombre del titular de la tarjeta
     private String numeroTarjeta;//numero de la tarjeta
     private String fechaCaducidad;//fecha de caducidad de la tarjeta
 
-    public TarjetaCredito(String nombreTitular, String numeroTarjeta, String fechaCaducidad) {
+    public TarjetaCredito(String nombreTitular, String numeroTarjeta, String fechaCaducidad) {    
+        if (!validarNumero(numeroTarjeta)) {
+            throw new IllegalArgumentException("El número de tarjeta debe tener exactamente 16 dígitos.");
+        }
+        if (nombreTitular == null || nombreTitular.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre del titular no puede estar vacío.");
+        }
+        if (!validarFecha(fechaCaducidad)) {
+            throw new IllegalArgumentException("La fecha de caducidad debe tener el formato MM/YY.");
+        }
+
         this.nombreTitular = nombreTitular;
         this.numeroTarjeta = numeroTarjeta;
         this.fechaCaducidad = fechaCaducidad;
@@ -36,6 +46,19 @@ public class TarjetaCredito{
         this.fechaCaducidad = fechaCaducidad;
     }
 
+    //Metodo para validar el numero de la tarjeta de credito. El numero de la tarjeta debe tener exactamente 16 digitos numericos.
+    private boolean validarNumeroTarjeta(String numeroTarjeta){
+        if (numeroTarjeta == null || numeroTarjeta.length() != 16) {
+            return false;
+        }for (char c: numeroTarjeta.toCharArray()){
+            if(!Character.isDigit(c)){
+                return false;
+                }
+            }
+        }
+        return true;
+    }
+    
     @Override
     public String toString() {
         return "TarjetaCredito{" +
@@ -44,4 +67,4 @@ public class TarjetaCredito{
                 ", fechaCaducidad='" + fechaCaducidad + '\'' +
                 '}';
     }
-}
+    }

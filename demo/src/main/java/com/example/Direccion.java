@@ -46,8 +46,6 @@ public class Direccion{
         this.codigoPostal = codigoPostal;
     }
 
-
-
     // Override mediante el metodo toString() para mostrar todos los datos de la clase
     @Override
     public String toString() {
