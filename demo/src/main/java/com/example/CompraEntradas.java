@@ -52,7 +52,7 @@ public class CompraEntradas {
         // Implementación para almacenar los datos de la reserva en la aplicación
     }
 
-    // Nuevo método para reservar un evento
+    // Método para reservar un evento (comprar)
     public void reservarEvento(Cliente cliente, String evento, String fecha, double precioPorEntrada, int cantidadEntradas, String tarjetaCredito) {
         // Calcula el precio total con descuento si el cliente es VIP
         double importeTotal = calcularPrecioConDescuento(precioPorEntrada * cantidadEntradas, cliente.esVip());
