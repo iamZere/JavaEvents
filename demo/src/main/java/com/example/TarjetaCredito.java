@@ -14,12 +14,12 @@ public class TarjetaCredito implements Serializable {
         this.fechaCaducidad = fechaCaducidad;
     }
 
-    // Método para validar los datos de la tarjeta de crédito.
+    // Método para validar los datos de la tarjeta de credito.
     public void validar() {    
         if (!validarNumeroTarjeta(numeroTarjeta)) {
             throw new IllegalArgumentException("El número de tarjeta debe tener exactamente 16 dígitos.");
         }
-        if (!validarNombreTitular(nombreTitular)) {  // Corregido aquí
+        if (!validarNombreTitular(nombreTitular)) {
             throw new IllegalArgumentException("El nombre del titular no puede estar vacío.");
         }
         if (!validarFechaCaducidad(fechaCaducidad)) {
@@ -27,7 +27,7 @@ public class TarjetaCredito implements Serializable {
         }
     }
 
-    // Método para validar el número de la tarjeta de crédito.
+    // Metodo para validar el numero de la tarjeta de credito.
     private boolean validarNumeroTarjeta(String numeroTarjeta) {
         if (numeroTarjeta == null || numeroTarjeta.length() != 16) {
             return false;
@@ -40,15 +40,15 @@ public class TarjetaCredito implements Serializable {
         return true;
     }
 
-    // Método para validar la fecha de caducidad de la tarjeta de crédito.
+    // Metodo para validar la fecha de caducidad de la tarjeta de credito.
     private boolean validarFechaCaducidad(String fechaCaducidad) {
         if (fechaCaducidad == null || fechaCaducidad.length() != 5) {
             return false;
         }
-        return fechaCaducidad.matches("(0[1-9]|1[0-2])/\\d{2}");
-    }
+        return fechaCaducidad.matches("(0[1-9]|1[0-2])/\\d{2}");// Formato MM/YY
+    }   
 
-    // Método para validar el nombre del titular.
+    // Metodo para validar el nombre del titular.
     private boolean validarNombreTitular(String nombreTitular) {
         if (nombreTitular == null || nombreTitular.trim().isEmpty()) {
             return false;
