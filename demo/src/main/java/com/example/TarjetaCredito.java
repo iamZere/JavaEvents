@@ -55,9 +55,6 @@ public class TarjetaCredito implements Serializable {
     }
 
     public void setNombreTitular(String nombreTitular) {
-        if (!validarNombreTitular(nombreTitular)) {
-            throw new IllegalArgumentException("El nombre del titular no puede estar vacío.");
-        }
         this.nombreTitular = nombreTitular;
     }
 
@@ -66,9 +63,6 @@ public class TarjetaCredito implements Serializable {
     }
 
     public void setNumeroTarjeta(String numeroTarjeta) {
-        if (!validarNumeroTarjeta(numeroTarjeta)) {
-            throw new IllegalArgumentException("El número de tarjeta debe tener exactamente 16 dígitos numéricos.");
-        }
         this.numeroTarjeta = numeroTarjeta;
     }
 
@@ -77,9 +71,6 @@ public class TarjetaCredito implements Serializable {
     }
 
     public void setFechaCaducidad(String fechaCaducidad) {
-        if (!validarFechaCaducidad(fechaCaducidad)) {
-            throw new IllegalArgumentException("La fecha de caducidad debe tener el formato MM/YY.");
-        }
         this.fechaCaducidad = fechaCaducidad;
     }
 
