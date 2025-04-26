@@ -1,54 +1,41 @@
 package com.example;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Map;
-
-// La clase gestiona la compra de entradas para eventos. Incluye los métodos encontrados, genera una factura en un archivo de texto 
-// y almacena los datos de la reserva. Algunos métodos son placeholders que requieren implementación adicional.
 public class ReservaEntradas {
-    public void buscarEventosPorCiudad(String ciudad) {
-        // Implementación para buscar eventos por ciudad
+    private final String evento;
+    private final String fecha;
+    private final int cantidadEntradas;
+    private final double importeTotal;
+
+    public ReservaEntradas(String evento, String fecha, int cantidadEntradas, double importeTotal) {
+        this.evento = evento;
+        this.fecha = fecha;
+        this.cantidadEntradas = cantidadEntradas;
+        this.importeTotal = importeTotal;
     }
 
-    public void buscarEventosPorTipo(String tipo) {
-        // Implementación para buscar eventos por tipo
+    public String getEvento() {
+        return evento;
     }
 
-    public void buscarEventosPorCriterios(Map<String, String> criterios) {
-        // Implementación para buscar eventos combinando varios criterios
+    public String getFecha() {
+        return fecha;
     }
 
-    public void seleccionarEvento(String eventoId) {
-        // Implementación para seleccionar un evento y mostrar su información
+    public int getCantidadEntradas() {
+        return cantidadEntradas;
     }
 
-    public void seleccionarFecha(String fecha) {
-        // Implementación para seleccionar una fecha del evento
+    public double getImporteTotal() {
+        return importeTotal;
     }
 
-    public double calcularPrecioConDescuento(double precio, boolean esVip) {
-        if (esVip) {
-            return precio * 0.9; // Aplica el 10% de descuento
-        }
-        return precio;
-    }
-
-    public void procesarPago(String tarjetaCredito, double importe) {
-        // Implementación para procesar el pago con tarjeta de crédito
-    }
-
-    public void generarFactura(String cliente, String evento, String fecha, double importe) {
-        String factura = "Cliente: " + cliente + "\nEvento: " + evento + "\nFecha: " + fecha + "\nImporte: " + importe;
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("factura.txt"))) {
-            writer.write(factura);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void almacenarReserva(String cliente, String evento, String fecha, double importe) {
-        // Implementación para almacenar los datos de la reserva en la aplicación
+    @Override
+    public String toString() {
+        return "Reserva{" +
+                "evento='" + evento + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", cantidadEntradas=" + cantidadEntradas +
+                ", importeTotal=" + importeTotal +
+                '}';
     }
 }
