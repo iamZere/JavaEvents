@@ -30,7 +30,7 @@ public class CompraEntradas {
 
     public double calcularPrecioConDescuento(double precio, boolean esVip) {
         if (esVip) {
-            return precio * 0.9; // Aplicar 10% de descuento
+            return precio * 0.9; // Aplica el 10% de descuento
         }
         return precio;
     }

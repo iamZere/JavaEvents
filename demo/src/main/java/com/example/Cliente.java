@@ -1,20 +1,25 @@
 package com.example;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Cliente {
 
-    private String nombre;//nombre del cliente
-    private String correo;//correo del cliente
-    private String clave;//clave del cliente
-    private String telefono;//telefono asociado al cliente
+    private String nombre;//Nombre del cliente
+    private String correo;//Correo del cliente
+    private String clave;//Clave del cliente
+    private String telefono;//Telefono asociado al cliente
     private Boolean esVip;//Inidica si el cliente es parte del grupo VIP o no
+    private List<Reserva> reservas;//Lista de reservas asociadas al cliente
 
     // Constructor
-    public Cliente(String nombre, String correo, String clave, String telefono, Boolean esVip) {
+    public Cliente(String nombre, String correo, String clave, String telefono) {
         this.nombre = nombre;
         this.correo = correo;
         this.clave = clave;
         this.telefono = telefono;
-        this.esVip = false; //de manera predeterminada, todos los usuarios NO forman parte del grupo VIP
+        this.reservas = new ArrayList<>();//Crea una lista vacia de reservas para el cliente
+        this.esVip = false; //De manera predeterminada, todos los usuarios NO forman parte del grupo VIP
     }
 
     public String getNombre() {
@@ -53,8 +58,16 @@ public class Cliente {
         return esVip;
     }
 
-    public void setesVip(Boolean esVip) {
+    public void setEsVip(Boolean esVip) {
         this.esVip = esVip;
+    }
+
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void anadirReserva(Reserva reserva) {
+        reservas.add(reserva);//Anade una reserva a la lista de reservas del cliente
     }
 
     @Override
@@ -64,6 +77,7 @@ public class Cliente {
                 ", correo='" + correo + '\'' +
                 ", clave='" + clave + '\'' +
                 ", telefono='" + telefono + '\'' +
+                ", reservas=" + reservas +
                 ", vip=" + esVip +
                 '}';
         }
