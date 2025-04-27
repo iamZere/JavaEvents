@@ -1,4 +1,4 @@
-package demo.src.main.java.com.example;
+package com.example;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public class Evento implements Serializable {
         this.tipo = tipo;
         this.descripcion = descripcion;
         this.lugar = lugar;
-        this.fechas = fechas != null ? fechas : new ArrayList<>(); // Asegura que la lista de fechas no sea null
+        this.fechas = fechas != null ? fechas : new ArrayList<>(); // Asegura que la lista de fechas no sea nula
         this.precio = precio;
         this.direccionImagen = direccionImagen;
         this.calificacion = calificacion;
