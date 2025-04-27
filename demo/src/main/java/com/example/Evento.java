@@ -1,24 +1,27 @@
-package com.example;
+package demo.src.main.java.com.example;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Evento {
-    private String titulo; //nombre del evento
-    private String tipo; //tipo de evento (concierto, obra de teatro, etc.)
-    private String descripcion; //descripcion del evento
-    private String lugar; //lugar del evento
-    private LocalDateTime fecha; //fecha y hora del evento  
-    private double precio; //precio del evento
-    private String direccionImagen; //direccion de la imagen del evento
-    private double calificacion; //calificacion del evento (1-5)
+public class Evento implements Serializable {
+    private String titulo; // nombre del evento
+    private String tipo; // tipo de evento (concierto, obra de teatro, etc.)
+    private String descripcion; // descripcion del evento
+    private String lugar; // lugar del evento
+    private List<LocalDateTime> fechas; // lista de fechas y horas del evento  
+    private double precio; // precio del evento
+    private String direccionImagen; // direccion de la imagen del evento
+    private double calificacion; // calificacion del evento (1-5)
 
     // Constructor
-    public Evento(String titulo, String tipo, String descripcion, String lugar, LocalDateTime fecha, double precio, String direccionImagen, double calificacion) {
+    public Evento(String titulo, String tipo, String descripcion, String lugar, List<LocalDateTime> fechas, double precio, String direccionImagen, double calificacion) {
         this.titulo = titulo;
         this.tipo = tipo;
         this.descripcion = descripcion;
         this.lugar = lugar;
-        this.fecha = fecha;
+        this.fechas = fechas != null ? fechas : new ArrayList<>(); // Asegura que la lista de fechas no sea null
         this.precio = precio;
         this.direccionImagen = direccionImagen;
         this.calificacion = calificacion;
@@ -31,6 +34,9 @@ public class Evento {
     }
 
     public void setTitulo(String titulo) {
+        if (titulo == null || titulo.isEmpty()) {
+            throw new IllegalArgumentException("El título no puede estar vacío.");
+        }
         this.titulo = titulo;
     }
 
@@ -39,6 +45,9 @@ public class Evento {
     }
 
     public void setTipo(String tipo) {
+        if (tipo == null || tipo.isEmpty()) {
+            throw new IllegalArgumentException("El tipo de evento no puede estar vacío.");
+        }
         this.tipo = tipo;
     }
 
@@ -47,6 +56,9 @@ public class Evento {
     }
 
     public void setDescripcion(String descripcion) {
+        if (descripcion == null || descripcion.isEmpty()) {
+            throw new IllegalArgumentException("La descripción no puede estar vacía.");
+        }
         this.descripcion = descripcion;
     }
 
@@ -55,15 +67,21 @@ public class Evento {
     }
 
     public void setLugar(String lugar) {
+        if (lugar == null || lugar.isEmpty()) {
+            throw new IllegalArgumentException("El lugar no puede estar vacío.");
+        }
         this.lugar = lugar;
     }
 
-    public LocalDateTime getFecha() {
-        return fecha;
+    public List<LocalDateTime> getFechas() {
+        return fechas;
     }
 
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
+    public void setFechas(List<LocalDateTime> fechas) {
+        if (fechas == null || fechas.isEmpty()) {
+            throw new IllegalArgumentException("La lista de fechas no puede estar vacía.");
+        }
+        this.fechas = fechas;
     }
 
     public double getPrecio() {
@@ -71,6 +89,9 @@ public class Evento {
     }
 
     public void setPrecio(double precio) {
+        if (precio < 0) {
+            throw new IllegalArgumentException("El precio no puede ser negativo.");
+        }
         this.precio = precio;
     }
 
@@ -79,6 +100,9 @@ public class Evento {
     }
 
     public void setDireccionImagen(String direccionImagen) {
+        if (direccionImagen == null || direccionImagen.isEmpty()) {
+            throw new IllegalArgumentException("La dirección de la imagen no puede estar vacía.");
+        }
         this.direccionImagen = direccionImagen;
     }
 
@@ -87,39 +111,48 @@ public class Evento {
     }
 
     public void setCalificacion(double calificacion) {
+        if (calificacion < 1 || calificacion > 5) {
+            throw new IllegalArgumentException("La calificación debe estar entre 1 y 5.");
+        }
         this.calificacion = calificacion;
     }
 
-    //Metodo para validar los datos del evento. Este metodo lanza una excepción si alguno de los datos no es válido o si no se ha introducido
+    // Método para validar los datos del evento
     public void validarEvento() {
         if (titulo == null || titulo.isEmpty()) {
             throw new IllegalArgumentException("El título no puede estar vacío.");
         }
-        else if (tipo == null || tipo.isEmpty()) {
+        if (tipo == null || tipo.isEmpty()) {
             throw new IllegalArgumentException("El tipo no puede estar vacío.");
         }
-        else if (descripcion == null || descripcion.isEmpty()) {
+        if (descripcion == null || descripcion.isEmpty()) {
             throw new IllegalArgumentException("La descripción no puede estar vacía.");
         }
-        else if (lugar == null || lugar.isEmpty()) {
+        if (lugar == null || lugar.isEmpty()) {
             throw new IllegalArgumentException("El lugar no puede estar vacío.");
         }
-        else if (fecha == null) {
-            throw new IllegalArgumentException("La fecha no puede ser nula.");
+        if (fechas == null || fechas.isEmpty()) {
+            throw new IllegalArgumentException("La lista de fechas no puede estar vacía.");
         }
-        else if (precio < 0) {
+        // Validar que las fechas no sean nulas o pasadas
+        for (LocalDateTime fecha : fechas) {
+            if (fecha == null) {
+                throw new IllegalArgumentException("Una de las fechas no puede ser nula.");
+            }
+            if (fecha.isBefore(LocalDateTime.now())) {
+                throw new IllegalArgumentException("Una de las fechas no puede ser en el pasado.");
+            }
+        }
+        if (precio < 0) {
             throw new IllegalArgumentException("El precio no puede ser negativo.");
         }
-        else if (direccionImagen == null || direccionImagen.isEmpty()) {
+        if (direccionImagen == null || direccionImagen.isEmpty()) {
             throw new IllegalArgumentException("La dirección de la imagen no puede estar vacía.");
         }
-        else if (calificacion < 1 || calificacion > 5) {
+        if (calificacion < 1 || calificacion > 5) {
             throw new IllegalArgumentException("La calificación debe estar entre 1 y 5.");
         }
     }
-
-    //Metodo para calcular el promedio de nota del evento. 
-    
 
     // Método toString para mostrar el evento
     @Override
@@ -129,7 +162,7 @@ public class Evento {
                 ", tipo='" + tipo + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", lugar='" + lugar + '\'' +
-                ", fecha=" + fecha +
+                ", fechas=" + fechas +
                 ", precio=" + precio +
                 ", direccionImagen='" + direccionImagen + '\'' +
                 ", calificacion=" + calificacion +
