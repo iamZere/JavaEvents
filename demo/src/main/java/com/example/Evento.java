@@ -8,22 +8,20 @@ import java.util.List;
 public class Evento implements Serializable {
     private String titulo; // nombre del evento
     private String tipo; // tipo de evento (concierto, obra de teatro, etc.)
-    private String descripcion; // descripcion del evento
-    private String lugar; // lugar del evento
+    private Direccion direccion; // direccion del evento
     private List<LocalDateTime> fechas; // lista de fechas y horas del evento  
     private double precio; // precio del evento
-    private String direccionImagen; // direccion de la imagen del evento
+    private String portada; // direccion de la imagen del evento
     private double calificacion; // calificacion del evento (1-5)
 
     // Constructor
-    public Evento(String titulo, String tipo, String descripcion, String lugar, List<LocalDateTime> fechas, double precio, String direccionImagen, double calificacion) {
+    public Evento(String titulo, String tipo, Direccion direccion, List<LocalDateTime> fechas, double precio, String portada, double calificacion) {
         this.titulo = titulo;
         this.tipo = tipo;
-        this.descripcion = descripcion;
-        this.lugar = lugar;
-        this.fechas = fechas != null ? fechas : new ArrayList<>(); // Asegura que la lista de fechas no sea nula
+        this.direccion = direccion;
+        this.fechas = new ArrayList<>(fechas);
         this.precio = precio;
-        this.direccionImagen = direccionImagen;
+        this.portada = portada;
         this.calificacion = calificacion;
     }
 
@@ -51,26 +49,15 @@ public class Evento implements Serializable {
         this.tipo = tipo;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public Direccion getDireccion() {
+        return direccion;
     }
 
-    public void setDescripcion(String descripcion) {
-        if (descripcion == null || descripcion.isEmpty()) {
-            throw new IllegalArgumentException("La descripción no puede estar vacía.");
+    public void setDireccion(Direccion direccion) {
+        if (direccion == null) {
+            throw new IllegalArgumentException("La dirección no puede ser nula.");
         }
-        this.descripcion = descripcion;
-    }
-
-    public String getLugar() {
-        return lugar;
-    }
-
-    public void setLugar(String lugar) {
-        if (lugar == null || lugar.isEmpty()) {
-            throw new IllegalArgumentException("El lugar no puede estar vacío.");
-        }
-        this.lugar = lugar;
+        this.direccion = direccion;
     }
 
     public List<LocalDateTime> getFechas() {
@@ -95,15 +82,15 @@ public class Evento implements Serializable {
         this.precio = precio;
     }
 
-    public String getDireccionImagen() {
-        return direccionImagen;
+    public String getPortada() {
+        return portada;
     }
 
-    public void setDireccionImagen(String direccionImagen) {
-        if (direccionImagen == null || direccionImagen.isEmpty()) {
+    public void setPortada(String portada) {
+        if (portada == null || portada.isEmpty()) {
             throw new IllegalArgumentException("La dirección de la imagen no puede estar vacía.");
         }
-        this.direccionImagen = direccionImagen;
+        this.portada = portada;
     }
 
     public double getCalificacion() {
@@ -125,12 +112,10 @@ public class Evento implements Serializable {
         if (tipo == null || tipo.isEmpty()) {
             throw new IllegalArgumentException("El tipo no puede estar vacío.");
         }
-        if (descripcion == null || descripcion.isEmpty()) {
-            throw new IllegalArgumentException("La descripción no puede estar vacía.");
+        if (direccion == null) {
+            throw new IllegalArgumentException("La dirección no puede estar vacía.");
         }
-        if (lugar == null || lugar.isEmpty()) {
-            throw new IllegalArgumentException("El lugar no puede estar vacío.");
-        }
+        
         if (fechas == null || fechas.isEmpty()) {
             throw new IllegalArgumentException("La lista de fechas no puede estar vacía.");
         }
@@ -146,7 +131,7 @@ public class Evento implements Serializable {
         if (precio < 0) {
             throw new IllegalArgumentException("El precio no puede ser negativo.");
         }
-        if (direccionImagen == null || direccionImagen.isEmpty()) {
+        if (portada == null || portada.isEmpty()) {
             throw new IllegalArgumentException("La dirección de la imagen no puede estar vacía.");
         }
         if (calificacion < 1 || calificacion > 5) {
@@ -160,11 +145,10 @@ public class Evento implements Serializable {
         return "Evento{" +
                 "titulo='" + titulo + '\'' +
                 ", tipo='" + tipo + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", lugar='" + lugar + '\'' +
+                ", direccion=" + direccion +
                 ", fechas=" + fechas +
                 ", precio=" + precio +
-                ", direccionImagen='" + direccionImagen + '\'' +
+                ", portada='" + portada + '\'' +
                 ", calificacion=" + calificacion +
                 '}';
     }

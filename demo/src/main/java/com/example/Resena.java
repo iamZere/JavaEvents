@@ -9,21 +9,11 @@ public class Resena implements Serializable {
     private String comentario; // Comentario opcional
 
     // Constructor
-    public Resena(Evento evento, Cliente cliente, double calificacion, String comentario) {
-        if (evento == null) {
-            throw new IllegalArgumentException("El evento no puede ser nulo.");
-        }
-        if (cliente == null) {
-            throw new IllegalArgumentException("El cliente no puede ser nulo.");
-        }
-        if (calificacion < 1 || calificacion > 5) {
-            throw new IllegalArgumentException("La calificación debe estar entre 1 y 5.");
-        }
-        
+    public Resena(Evento evento, Cliente cliente, double calificacion, String comentario) {     
         this.evento = evento;
         this.cliente = cliente;
         this.calificacion = calificacion;
-        this.comentario = comentario != null ? comentario : ""; // Si el comentario es nulo, asignamos cadena vacia
+        this.comentario = comentario; // Si el comentario es nulo, asignamos cadena vacia
     }
 
     // Getters y Setters
@@ -32,9 +22,6 @@ public class Resena implements Serializable {
     }
 
     public void setEvento(Evento evento) {
-        if (evento == null) {
-            throw new IllegalArgumentException("El evento no puede ser nulo.");
-        }
         this.evento = evento;
     }
 
@@ -43,9 +30,6 @@ public class Resena implements Serializable {
     }
 
     public void setCliente(Cliente cliente) {
-        if (cliente == null) {
-            throw new IllegalArgumentException("El cliente no puede ser nulo.");
-        }
         this.cliente = cliente;
     }
 
@@ -54,9 +38,6 @@ public class Resena implements Serializable {
     }
 
     public void setCalificacion(double calificacion) {
-        if (calificacion < 1 || calificacion > 5) {
-            throw new IllegalArgumentException("La calificación debe estar entre 1 y 5.");
-        }
         this.calificacion = calificacion;
     }
 
@@ -65,7 +46,7 @@ public class Resena implements Serializable {
     }
 
     public void setComentario(String comentario) {
-        this.comentario = comentario != null ? comentario : ""; // Si el comentario es nulo, se le asigna una cadena vacia de manera predeterminada
+        this.comentario = comentario; // Si el comentario es nulo, se le asigna una cadena vacia de manera predeterminada
     }
 
     // Método toString para mostrar la reseña
