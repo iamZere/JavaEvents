@@ -23,7 +23,7 @@ public class Resena implements Serializable {
         this.evento = evento;
         this.cliente = cliente;
         this.calificacion = calificacion;
-        this.comentario = comentario != null ? comentario : ""; // Si el comentario es nulo, asignamos cadena vacía
+        this.comentario = comentario != null ? comentario : ""; // Si el comentario es nulo, asignamos cadena vacia
     }
 
     // Getters y Setters
@@ -72,7 +72,7 @@ public class Resena implements Serializable {
     @Override
     public String toString() {
         return "Resena{" +
-                "evento=" + evento.getTitulo() + // Solo se muestra el título del evento
+                "evento=" + evento.getTitulo() + // Solo se muestra el titulo del evento
                 ", cliente=" + cliente.getNombre() + // Solo se muestra el nombre del cliente
                 ", calificacion=" + calificacion +
                 ", comentario='" + comentario + '\'' +
