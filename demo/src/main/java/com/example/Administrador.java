@@ -7,7 +7,7 @@ public class Administrador{
     private String clave;//Clave asociada al administrador
 
 
-    private Administrador(String correo, String clave) {
+    public Administrador(String correo, String clave) {
         this.correo = correo;
         this.clave = clave;
     }
