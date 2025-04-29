@@ -7,7 +7,7 @@ import java.util.Map;
 
 // La clase gestiona la compra de entradas para eventos. Incluye los métodos encontrados, genera una factura en un archivo de texto 
 // y almacena los datos de la reserva. Algunos métodos son placeholders que requieren implementación adicional.
-public class CompraEntradas {
+public class NoBorrar {
     public void buscarEventosPorCiudad(String ciudad) {
         // Implementación para buscar eventos por ciudad
     }

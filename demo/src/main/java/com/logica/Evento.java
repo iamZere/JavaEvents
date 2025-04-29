@@ -15,6 +15,7 @@ public class Evento implements Serializable {
     private String direccionImagen; // direccion de la imagen del evento
     private double calificacion; // calificacion del evento (1-5)
     private static final List<String> TIPOS_VALIDOS = List.of("Concierto", "Deporte", "Musical", "Teatro");
+    private String nombre; // nombre del evento para su búsqueda
 
     // Constructor
     public Evento(String titulo, String tipo, String descripcion, String lugar, List<LocalDateTime> fechas, double precio, String direccionImagen, double calificacion) {
@@ -119,6 +120,17 @@ public class Evento implements Serializable {
             throw new IllegalArgumentException("La calificación debe estar entre 1 y 5.");
         }
         this.calificacion = calificacion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        if (nombre == null || nombre.isEmpty()) {
+            throw new IllegalArgumentException("El nombre no puede estar vacío.");
+        }
+        this.nombre = nombre;
     }
 
     // Método para validar los datos del evento

@@ -40,7 +40,7 @@ public class JavaEvents {
         ArrayList<Evento> eventosPorNombre = new ArrayList<>();
         for (Evento evento : reservaEventos) {
             if (evento.getNombre().toLowerCase().contains(palabraClave.toLowerCase())) {  // Verifica si el nombre del evento contiene la palabra clave (ignorando mayúsculas/minúsculas)
-            eventosPorNombre.add(evento);
+                eventosPorNombre.add(evento);
             }
         } return eventosPorNombre;
     }
