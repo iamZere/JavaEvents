@@ -36,6 +36,7 @@ public class JavaEvents {
         } return eventosPorTipo;
     }
 
+    //3º metodo: permite buscar eventos por palabra clave, de forma que si coincide con el nombre del evento, se agrega a la lista de eventos encontrados.
     public ArrayList<Evento> buscarEventosPorNombre(String palabraClave) {
         ArrayList<Evento> eventosPorNombre = new ArrayList<>();
         for (Evento evento : reservaEventos) {
