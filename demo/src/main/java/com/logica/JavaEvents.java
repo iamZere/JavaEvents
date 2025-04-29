@@ -31,7 +31,7 @@ public class JavaEvents {
         ArrayList<Evento> eventosPorTipo = new ArrayList<>(); 
         for (Evento evento : reservaEventos) { 
             if (evento.getTipo().equalsIgnoreCase(tipo)) { // Compara el tipo del evento con el tipo proporcionado
-                eventosPorTipo.add(evento); // Si coinciden, agrega el evento a la lista de eventos encontrados
+                eventosPorTipo.add(evento); 
             }
         } return eventosPorTipo;
     }
@@ -44,5 +44,12 @@ public class JavaEvents {
                 eventosPorNombre.add(evento);
             }
         } return eventosPorNombre;
+    }
+
+    //4º metodo: permite buscar eventos ordenados por precio, de forma que se ordenan los eventos por su precio de menor a mayor.
+    public ArrayList<Evento> buscarEventosPorPrecio() {
+        ArrayList<Evento> eventosOrdenados = new ArrayList<>(reservaEventos); 
+        eventosOrdenados.sort((evento1, evento2) -> Double.compare(evento1.getPrecio(), evento2.getPrecio())); 
+        return eventosOrdenados; // Devuelve la lista de eventos ordenados por precio
     }
 }
