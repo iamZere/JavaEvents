@@ -14,6 +14,7 @@ public class Evento implements Serializable {
     private double precio; // precio del evento
     private String direccionImagen; // direccion de la imagen del evento
     private double calificacion; // calificacion del evento (1-5)
+    private static final List<String> TIPOS_VALIDOS = List.of("Concierto", "Deporte", "Musical", "Teatro");
 
     // Constructor
     public Evento(String titulo, String tipo, String descripcion, String lugar, List<LocalDateTime> fechas, double precio, String direccionImagen, double calificacion) {
@@ -47,6 +48,9 @@ public class Evento implements Serializable {
     public void setTipo(String tipo) {
         if (tipo == null || tipo.isEmpty()) {
             throw new IllegalArgumentException("El tipo de evento no puede estar vacío.");
+        }
+        if (!TIPOS_VALIDOS.contains(tipo)) {
+            throw new IllegalArgumentException("El tipo de evento debe ser uno de los siguientes: " + TIPOS_VALIDOS);
         }
         this.tipo = tipo;
     }
