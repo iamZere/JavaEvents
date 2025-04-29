@@ -1,4 +1,4 @@
-package com.example;
+package com.logica;
 
 import java.util.Map; // Permite manejar pares clave-valor, como en la busqueda de eventos y clientes por criterios específicos
 

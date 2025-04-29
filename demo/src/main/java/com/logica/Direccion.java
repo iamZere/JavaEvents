@@ -1,4 +1,4 @@
-package com.example;
+package com.logica;
 
 public class Direccion{
     private String calle;//nombre de la calle

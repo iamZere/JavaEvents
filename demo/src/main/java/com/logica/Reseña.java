@@ -1,15 +1,15 @@
-package com.example;
+package com.logica;
 
 import java.io.Serializable;
 
-public class Resena implements Serializable {
+public class Reseña implements Serializable {
     private Evento evento; // Evento que está siendo resenado
     private Cliente cliente; // Cliente que escribe la reseña
     private double calificacion; // Calificacion del 1 a 5
     private String comentario; // Comentario opcional
 
     // Constructor
-    public Resena(Evento evento, Cliente cliente, double calificacion, String comentario) {     
+    public Reseña(Evento evento, Cliente cliente, double calificacion, String comentario) {     
         this.evento = evento;
         this.cliente = cliente;
         this.calificacion = calificacion;

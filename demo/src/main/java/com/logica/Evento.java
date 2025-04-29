@@ -1,4 +1,4 @@
-package com.example;
+package com.logica;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

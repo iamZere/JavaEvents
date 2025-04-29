@@ -1,4 +1,4 @@
-package com.example;
+package com.logica;
 
 public class ReservaEntradas {
     private final String evento;
