@@ -1,11 +1,6 @@
-package com.app;
+package com.logica;
 
 import java.util.ArrayList;
-
-import com.logica.Administrador;
-import com.logica.Cliente;
-import com.logica.Evento;
-
 
 public class JavaEvents {
 
@@ -28,8 +23,7 @@ public class JavaEvents {
             if (evento.getLugar().equalsIgnoreCase(ciudad)) { // Compara el lugar del evento con la ciudad proporcionada
                 eventosEncontrados.add(evento); // Si coinciden, agrega el evento a la lista de eventos encontrados
             }
-        }
-        return eventosEncontrados; 
+        } return eventosEncontrados; 
     }
 
     //2º metodo: permite buscar eventos por tipo, siendo Concierto, Deporte, Musical o Teatro las opciones posibles.
@@ -39,7 +33,15 @@ public class JavaEvents {
             if (evento.getTipo().equalsIgnoreCase(tipo)) { // Compara el tipo del evento con el tipo proporcionado
                 eventosPorTipo.add(evento); // Si coinciden, agrega el evento a la lista de eventos encontrados
             }
-        }
-        return eventosPorTipo;
+        } return eventosPorTipo;
+    }
+
+    public ArrayList<Evento> buscarEventosPorNombre(String palabraClave) {
+        ArrayList<Evento> eventosPorNombre = new ArrayList<>();
+        for (Evento evento : reservaEventos) {
+            if (evento.getNombre().toLowerCase().contains(palabraClave.toLowerCase())) {  // Verifica si el nombre del evento contiene la palabra clave (ignorando mayúsculas/minúsculas)
+            eventosPorNombre.add(evento);
+            }
+        } return eventosPorNombre;
     }
 }
