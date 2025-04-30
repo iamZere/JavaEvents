@@ -18,12 +18,12 @@ public class JavaEvents {
 
     // Metodos
 
-    //1º metodo: permite buscar eventos por ciudad. Se espera que la ciudad sea un String y se devuelve una lista de eventos que coinciden con la ciudad proporcionada.
+    //1º metodo: permite buscar eventos por ciudad. 
     public ArrayList<Evento> buscarEventosPorCiudad(String ciudad) {
         ArrayList<Evento> eventosEncontrados = new ArrayList<>(); // Lista para almacenar los eventos encontrados
         for (Evento evento : reservaEventos) { 
             if (evento.getLugar().equalsIgnoreCase(ciudad)) { // Compara el lugar del evento con la ciudad proporcionada
-                eventosEncontrados.add(evento); // Si coinciden, agrega el evento a la lista de eventos encontrados
+                eventosEncontrados.add(evento); 
             }
         } return eventosEncontrados; 
     }
