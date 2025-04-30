@@ -76,9 +76,7 @@ public class JavaEvents {
             System.out.println("Calificación: " + evento.getCalificacion());
             return; // Termina el método después de mostrar la información
             }
-        }
-    // Si no se encuentra el evento, muestra un mensaje
-    System.out.println("Evento no encontrado.");
+        } System.out.println("Evento no encontrado.");
     }
 
     //7º metodo: permite seleccionar las fechas disponibles del evento ya seleccionado anteriormente.
