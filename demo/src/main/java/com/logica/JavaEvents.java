@@ -9,6 +9,7 @@ public class JavaEvents {
     private ArrayList<Evento> reservaEventos;
     private Cliente cliente;
     private Administrador administrador;
+    private TarjetaCredito tarjetaCredito;
 
     // Constructor
     public JavaEvents(ArrayList<Evento> reservaEventos) {
@@ -88,5 +89,23 @@ public class JavaEvents {
                 return;
             }
         } System.out.println("Fecha no disponible."); // Si no se encuentra la fecha, muestra un mensaje
+    }
+
+    //8º metodo: permite procesar el pago con la tarjeta de credito, verificando si el importe es correcto y si la tarjeta es válida.
+    public void procesarPago(String tarjetaCredito, double precio) {
+        if (cliente != null && cliente.esVip()) { 
+            precio = precio * 0.9; // Aplica un descuento del 10%
+            System.out.println("Descuento VIP aplicado. Nuevo importe: " + precio + "€.");
+            }
+
+        if (tarjetaCredito != null && !tarjetaCredito.isEmpty() && precio > 0) { // Verifica que la tarjeta y el importe sean válidos
+        System.out.println("Pago procesado con éxito. Importe: " + precio + "€.");
+        } else if (tarjetaCredito == null || tarjetaCredito.isEmpty()) {
+        System.out.println("Error: La tarjeta de crédito no puede estar vacía.");
+        } else if (precio <= 0) {
+        System.out.println("Error: El importe debe ser mayor que cero.");
+        } else {
+        System.out.println("Error en el pago. Verifique los datos de la tarjeta y el importe.");
+        }
     }
 }
