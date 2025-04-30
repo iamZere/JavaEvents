@@ -47,9 +47,16 @@ public class JavaEvents {
     }
 
     //4º metodo: permite buscar eventos ordenados por precio, de forma que se ordenan los eventos por su precio de menor a mayor.
-    public ArrayList<Evento> buscarEventosPorPrecio() {
+    public ArrayList<Evento> buscarEventosPorPrecioAscendente() {
         ArrayList<Evento> eventosOrdenados = new ArrayList<>(reservaEventos); 
         eventosOrdenados.sort((evento1, evento2) -> Double.compare(evento1.getPrecio(), evento2.getPrecio())); 
-        return eventosOrdenados; // Devuelve la lista de eventos ordenados por precio
+        return eventosOrdenados; // Devuelve la lista de eventos ordenados por precio ascendente
+    }
+
+    //5º metodo: similar al anterior, pero en este caso se ordenan por precio de mayor a menor.
+    public ArrayList<Evento> buscarEventosPorPrecioDescendente() {
+        ArrayList<Evento> eventosOrdenados = new ArrayList<>(reservaEventos); 
+        eventosOrdenados.sort((evento1, evento2) -> Double.compare(evento2.getPrecio(), evento1.getPrecio())); 
+        return eventosOrdenados; // Devuelve la lista de eventos ordenados por precio descendente
     }
 }
