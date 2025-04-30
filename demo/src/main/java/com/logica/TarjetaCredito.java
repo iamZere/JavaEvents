@@ -50,9 +50,10 @@ public class TarjetaCredito implements Serializable {
     }    
 
     public boolean esValida() {
-        
+
         return numeroTarjeta != null && !numeroTarjeta.isEmpty();
     }
+    
     // Getters y Setters
     public String getNombreTitular() {
         return nombreTitular;

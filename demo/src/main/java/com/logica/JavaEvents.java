@@ -96,9 +96,9 @@ public class JavaEvents {
             System.out.println("Descuento VIP aplicado. Nuevo importe: " + precio + "€.");
             }
 
-        if (tarjetaCredito != null && !tarjetaCredito.esValida() && precio > 0) { // Verifica que la tarjeta y el importe sean válidos
+        if (tarjetaCredito != null && precio > 0) { // Verifica que la tarjeta y el importe sean válidos
         System.out.println("Pago procesado con éxito. Importe: " + precio + "€.");
-        } else if (tarjetaCredito == null || tarjetaCredito.esValida()) {
+        } else if (tarjetaCredito == null) {
         System.out.println("Error: La tarjeta de crédito no puede estar vacía.");
         } else if (precio <= 0) {
         System.out.println("Error: El importe debe ser mayor que cero.");
