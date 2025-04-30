@@ -1,5 +1,6 @@
 package com.logica;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class JavaEvents {
@@ -77,5 +78,15 @@ public class JavaEvents {
         }
     // Si no se encuentra el evento, muestra un mensaje
     System.out.println("Evento no encontrado.");
+    }
+
+    //7º metodo: permite seleccionar las fechas disponibles del evento ya seleccionado anteriormente.
+    public void seleccionarFecha(String fecha) {
+        for (Evento evento : reservaEventos) {
+            if (evento.getFechas().contains(LocalDateTime.parse(fecha))) { // Verifica si la fecha está disponible en el evento
+                System.out.println("Fecha seleccionada: " + fecha);
+                return;
+            }
+        } System.out.println("Fecha no disponible."); // Si no se encuentra la fecha, muestra un mensaje
     }
 }
