@@ -96,14 +96,15 @@ public class JavaEvents {
             System.out.println("Descuento VIP aplicado. Nuevo importe: " + precio + "€.");
             }
 
-        if (tarjetaCredito != null && precio > 0) { // Verifica que la tarjeta y el importe sean válidos
-        System.out.println("Pago procesado con éxito. Importe: " + precio + "€.");
+        if (tarjetaCredito != null && precio > 0) { 
+            System.out.println("Procesando pago con tarjeta de crédito: " + tarjetaCredito.getNumeroTarjeta());
+            System.out.println("Pago procesado con éxito. Importe: " + precio + "€.");
         } else if (tarjetaCredito == null) {
-        System.out.println("Error: La tarjeta de crédito no puede estar vacía.");
+            System.out.println("Error: La tarjeta de crédito no puede estar vacía.");
         } else if (precio <= 0) {
-        System.out.println("Error: El importe debe ser mayor que cero.");
+            System.out.println("Error: El importe debe ser mayor que cero.");
         } else {
-        System.out.println("Error en el pago. Verifique los datos de la tarjeta y el importe.");
+            System.out.println("Error en el pago. Verifique los datos de la tarjeta y el importe.");
         }
     }
 }
