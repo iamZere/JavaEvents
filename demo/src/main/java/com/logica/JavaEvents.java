@@ -80,25 +80,25 @@ public class JavaEvents {
     }
 
     //7º metodo: permite seleccionar las fechas disponibles del evento ya seleccionado anteriormente.
-    public void seleccionarFecha(String fecha) {
+    public void seleccionarFecha(LocalDateTime fecha) {
         for (Evento evento : reservaEventos) {
-            if (evento.getFechas().contains(LocalDateTime.parse(fecha))) { // Verifica si la fecha está disponible en el evento
+            if (evento.getFechas().contains(fecha)) { // Verifica si la fecha está disponible en el evento
                 System.out.println("Fecha seleccionada: " + fecha);
                 return;
             }
-        } System.out.println("Fecha no disponible."); // Si no se encuentra la fecha, muestra un mensaje
+        } System.out.println("Fecha no disponible."); // No disponible si no coincide con ninguna fecha del evento
     }
 
     //8º metodo: permite procesar el pago con la tarjeta de credito, verificando si el importe es correcto y si la tarjeta es válida.
-    public void procesarPago(String tarjetaCredito, double precio) {
+    public void procesarPago(double precio) {
         if (cliente != null && cliente.esVip()) { 
             precio = precio * 0.9; // Aplica un descuento del 10%
             System.out.println("Descuento VIP aplicado. Nuevo importe: " + precio + "€.");
             }
 
-        if (tarjetaCredito != null && !tarjetaCredito.isEmpty() && precio > 0) { // Verifica que la tarjeta y el importe sean válidos
+        if (tarjetaCredito != null && !tarjetaCredito.esValida() && precio > 0) { // Verifica que la tarjeta y el importe sean válidos
         System.out.println("Pago procesado con éxito. Importe: " + precio + "€.");
-        } else if (tarjetaCredito == null || tarjetaCredito.isEmpty()) {
+        } else if (tarjetaCredito == null || tarjetaCredito.esValida()) {
         System.out.println("Error: La tarjeta de crédito no puede estar vacía.");
         } else if (precio <= 0) {
         System.out.println("Error: El importe debe ser mayor que cero.");

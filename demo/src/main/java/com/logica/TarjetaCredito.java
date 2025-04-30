@@ -49,6 +49,10 @@ public class TarjetaCredito implements Serializable {
         return fechaCaducidad.matches("(0[1-9]|1[0-2])/\\d{2}");
     }    
 
+    public boolean esValida() {
+        
+        return numeroTarjeta != null && !numeroTarjeta.isEmpty();
+    }
     // Getters y Setters
     public String getNombreTitular() {
         return nombreTitular;
