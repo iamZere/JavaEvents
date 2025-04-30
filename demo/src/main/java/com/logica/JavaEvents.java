@@ -59,4 +59,23 @@ public class JavaEvents {
         eventosOrdenados.sort((evento1, evento2) -> Double.compare(evento2.getPrecio(), evento1.getPrecio())); 
         return eventosOrdenados; // Devuelve la lista de eventos ordenados por precio descendente
     }
+
+    //6º metodo: permite seleccionar el evento deseado y muestra su información.
+    public void seleccionarYMostrarEventoPorTitulo(String titulo) {
+    for (Evento evento : reservaEventos) {
+        if (evento.getTitulo().equals(titulo)) { 
+            // Muestra la información del evento si coincide el título
+            System.out.println("Título: " + evento.getTitulo());
+            System.out.println("Tipo: " + evento.getTipo());
+            System.out.println("Descripción: " + evento.getDescripcion());
+            System.out.println("Lugar: " + evento.getLugar());
+            System.out.println("Fechas disponibles: " + evento.getFechas());
+            System.out.println("Precio: " + evento.getPrecio());
+            System.out.println("Calificación: " + evento.getCalificacion());
+            return; // Termina el método después de mostrar la información
+            }
+        }
+    // Si no se encuentra el evento, muestra un mensaje
+    System.out.println("Evento no encontrado.");
+    }
 }
