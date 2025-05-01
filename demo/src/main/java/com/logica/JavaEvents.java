@@ -12,8 +12,11 @@ public class JavaEvents {
     private TarjetaCredito tarjetaCredito;
 
     // Constructor
-    public JavaEvents(ArrayList<Evento> reservaEventos) {
+    public JavaEvents(ArrayList<Evento> reservaEventos, Cliente cliente, Administrador administrador, TarjetaCredito tarjetaCredito) {
+        this.cliente = cliente;
         this.reservaEventos = reservaEventos;
+        this.administrador = administrador;
+        this.tarjetaCredito = tarjetaCredito;
     }
 
     // Metodos
@@ -161,7 +164,8 @@ public class JavaEvents {
     //13º metodo: permite al admin ver todos los clientes, mostrando su información
     public void verClientes() {
         System.out.println("Clientes registrados:");
-        for (Cliente cliente : reservaEventos) {
+        ArrayList<Cliente> clientes = administrador.getClientes(); // Assuming there's a method to get the list of clients
+        for (Cliente cliente : clientes) {
             System.out.println("Nombre: " + cliente.getNombre());
             System.out.println("Correo: " + cliente.getCorreo());
             System.out.println("Teléfono: " + cliente.getTelefono());

@@ -1,15 +1,17 @@
 package com.logica;
 
-import java.util.Map; // Permite manejar pares clave-valor, como en la busqueda de eventos y clientes por criterios específicos
+import java.util.ArrayList;
 
 public class Administrador{
     private String correo;//Correo unico del administrador
     private String clave;//Clave asociada al administrador
-
-
+    private final ArrayList<Cliente> clientes;
+    
+    // Constructor
     public Administrador(String correo, String clave) {
         this.correo = correo;
         this.clave = clave;
+        this.clientes = new ArrayList<>(); // Inicializa la lista de clientes
     }
 
     //Getters y Setters
@@ -27,6 +29,10 @@ public class Administrador{
 
     public void setClave(String clave) {
         this.clave = clave;
+    }
+
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
     }
 
     // Gestion de eventos
