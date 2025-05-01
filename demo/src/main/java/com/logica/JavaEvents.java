@@ -144,4 +144,50 @@ public class JavaEvents {
             }
         } System.out.println("El evento no existe.");
     }
+
+    //12º metodo: permite al admin ver todos los eventos, mostrando su información
+    public void verEventos() {
+        for (Evento evento : reservaEventos) {
+            System.out.println("Título: " + evento.getTitulo());
+            System.out.println("Tipo: " + evento.getTipo());
+            System.out.println("Descripción: " + evento.getDescripcion());
+            System.out.println("Lugar: " + evento.getLugar());
+            System.out.println("Fechas disponibles: " + evento.getFechas());
+            System.out.println("Precio: " + evento.getPrecio());
+            System.out.println("Calificación: " + evento.getCalificacion());
+        }
+    }
+
+    //13º metodo: permite al admin ver todos los clientes, mostrando su información
+    public void verClientes() {
+        System.out.println("Clientes registrados:");
+        for (Cliente cliente : reservaEventos) {
+            System.out.println("Nombre: " + cliente.getNombre());
+            System.out.println("Correo: " + cliente.getCorreo());
+            System.out.println("Teléfono: " + cliente.getTelefono());
+            System.out.println("VIP: " + (cliente.esVip() ? "Sí" : "No"));
+            System.out.println("Reservas: " + cliente.getReservas().size());
+        }
+    }
+
+    //14º metodo: permite al admin dar VIP a un cliente, verificando que el cliente exista previamente
+    public void darVipCliente(Cliente cliente) {
+        if (reservaEventos.contains(cliente)) { // Verifica si el cliente existe
+            cliente.setEsVip(true); // Cambia el estado a VIP
+            System.out.println("Cliente VIP actualizado: " + cliente.getNombre());
+        } else {
+            System.out.println("El cliente no existe.");
+        }
+    }
+
+    //15º metodo: permite al admin buscar clientes por criterios específicos, como nombre o correo
+    public ArrayList<Cliente> buscarClientesPorCriterios(String criterio, String valor) {
+        ArrayList<Cliente> clientesEncontrados = new ArrayList<>();
+        for (Cliente cliente : reservaEventos) {
+            if ((criterio.equalsIgnoreCase("nombre") && cliente.getNombre().equalsIgnoreCase(valor)) ||
+                (criterio.equalsIgnoreCase("correo") && cliente.getCorreo().equalsIgnoreCase(valor))) {
+                clientesEncontrados.add(cliente);
+            }
+        } return clientesEncontrados;
+    }
 }
