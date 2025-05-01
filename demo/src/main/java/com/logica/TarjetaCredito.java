@@ -28,7 +28,7 @@ public class TarjetaCredito implements Serializable {
         if (numeroTarjeta == null || numeroTarjeta.length() != 16) {
             return false;
         }
-        for (char c : numeroTarjeta.toCharArray()) {
+        for (char c : numeroTarjeta.toCharArray()) { 
             if (!Character.isDigit(c)) {
                 return false;
             }

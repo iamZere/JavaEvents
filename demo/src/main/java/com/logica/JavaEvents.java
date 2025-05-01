@@ -6,10 +6,10 @@ import java.util.ArrayList;
 public class JavaEvents {
 
     // Atributos
-    private ArrayList<Evento> reservaEventos;
-    private Cliente cliente;
-    private Administrador administrador;
-    private TarjetaCredito tarjetaCredito;
+    private final ArrayList<Evento> reservaEventos;
+    private final Cliente cliente;
+    private final Administrador administrador;
+    private final TarjetaCredito tarjetaCredito;
 
     // Constructor
     public JavaEvents(ArrayList<Evento> reservaEventos, Cliente cliente, Administrador administrador, TarjetaCredito tarjetaCredito) {
@@ -41,7 +41,7 @@ public class JavaEvents {
         } return eventosPorTipo;
     }
 
-    //3º metodo: permite buscar eventos por palabra clave, de forma que si coincide con el nombre del evento, se agrega a la lista de eventos encontrados
+    //3º metodo(extra): permite buscar eventos por palabra clave, de forma que si coincide con el nombre del evento, se agrega a la lista de eventos encontrados
     public ArrayList<Evento> buscarEventosPorNombre(String palabraClave) {
         ArrayList<Evento> eventosPorNombre = new ArrayList<>();
         for (Evento evento : reservaEventos) {
@@ -51,14 +51,14 @@ public class JavaEvents {
         } return eventosPorNombre;
     }
 
-    //4º metodo: permite buscar eventos ordenados por precio, de forma que se ordenan los eventos por su precio de menor a mayor
+    //4º metodo(extra): permite buscar eventos ordenados por precio, de forma que se ordenan los eventos por su precio de menor a mayor
     public ArrayList<Evento> buscarEventosPorPrecioAscendente() {
         ArrayList<Evento> eventosOrdenados = new ArrayList<>(reservaEventos); 
         eventosOrdenados.sort((evento1, evento2) -> Double.compare(evento1.getPrecio(), evento2.getPrecio())); 
         return eventosOrdenados; // Devuelve la lista de eventos ordenados por precio ascendente
     }
 
-    //5º metodo: similar al anterior, pero en este caso se ordenan por precio de mayor a menor
+    //5º metodo(extra): similar al anterior, pero en este caso se ordenan por precio de mayor a menor
     public ArrayList<Evento> buscarEventosPorPrecioDescendente() {
         ArrayList<Evento> eventosOrdenados = new ArrayList<>(reservaEventos); 
         eventosOrdenados.sort((evento1, evento2) -> Double.compare(evento2.getPrecio(), evento1.getPrecio())); 
@@ -157,26 +157,50 @@ public class JavaEvents {
             System.out.println("Lugar: " + evento.getLugar());
             System.out.println("Fechas disponibles: " + evento.getFechas());
             System.out.println("Precio: " + evento.getPrecio());
-            System.out.println("Calificación: " + evento.getCalificacion());
         }
     }
 
-    //13º metodo: permite al admin ver todos los clientes, mostrando su información
+    //13º metodo(extra): permite al admin ver eventos en funcion de su tipo, siendo Concierto, Deporte, Musical o Teatro las opciones posibles
+    public void verEventosPorTipo(String tipo) {
+        for (Evento evento : reservaEventos) {
+            if (evento.getTipo().equalsIgnoreCase(tipo)) { 
+                System.out.println("Título: " + evento.getTitulo());
+                System.out.println("Descripción: " + evento.getDescripcion());
+                System.out.println("Lugar: " + evento.getLugar());
+                System.out.println("Fechas disponibles: " + evento.getFechas());
+                System.out.println("Precio: " + evento.getPrecio());
+            }
+        }
+    }
+
+    //14º metodo(extra): permite al admin ver eventos en funcion de la fecha del mismo, ordenando por fecha de menor a mayor
+    public void verEventosPorFecha() {
+        reservaEventos.sort((evento1, evento2) -> evento1.getFechas().get(0).compareTo(evento2.getFechas().get(0))); //ordena los eventos por la primera fecha disponible
+        for (Evento evento : reservaEventos) {
+            System.out.println("Título: " + evento.getTitulo());
+            System.out.println("Descripción: " + evento.getDescripcion());
+            System.out.println("Lugar: " + evento.getLugar());
+            System.out.println("Fechas disponibles: " + evento.getFechas());
+            System.out.println("Precio: " + evento.getPrecio());
+        }
+    }
+
+    //15º metodo: permite al admin ver todos los clientes, mostrando su información
     public void verClientes() {
         System.out.println("Clientes registrados:");
-        ArrayList<Cliente> clientes = administrador.getClientes(); // Assuming there's a method to get the list of clients
-        for (Cliente cliente : clientes) {
-            System.out.println("Nombre: " + cliente.getNombre());
-            System.out.println("Correo: " + cliente.getCorreo());
-            System.out.println("Teléfono: " + cliente.getTelefono());
-            System.out.println("VIP: " + (cliente.esVip() ? "Sí" : "No"));
-            System.out.println("Reservas: " + cliente.getReservas().size());
+        ArrayList<Cliente> clientes = administrador.getClientes(); // muestra lista de clientes al admin
+        for (Cliente clienteVer : clientes) {
+            System.out.println("Nombre: " + clienteVer.getNombre());
+            System.out.println("Correo: " + clienteVer.getCorreo());
+            System.out.println("Teléfono: " + clienteVer.getTelefono());
+            System.out.println("VIP: " + (clienteVer.esVip() ? "Sí" : "No"));
+            System.out.println("Reservas: " + clienteVer.getReservas().size());
         }
     }
 
-    //14º metodo: permite al admin dar VIP a un cliente, verificando que el cliente exista previamente
+    //16º metodo: permite al admin dar VIP a un cliente, verificando que el cliente exista previamente
     public void darVipCliente(Cliente cliente) {
-        if (reservaEventos.contains(cliente)) { // Verifica si el cliente existe
+        if (administrador.getClientes().contains(cliente)) { 
             cliente.setEsVip(true); // Cambia el estado a VIP
             System.out.println("Cliente VIP actualizado: " + cliente.getNombre());
         } else {
@@ -184,14 +208,22 @@ public class JavaEvents {
         }
     }
 
-    //15º metodo: permite al admin buscar clientes por criterios específicos, como nombre o correo
-    public ArrayList<Cliente> buscarClientesPorCriterios(String criterio, String valor) {
-        ArrayList<Cliente> clientesEncontrados = new ArrayList<>();
-        for (Cliente cliente : reservaEventos) {
-            if ((criterio.equalsIgnoreCase("nombre") && cliente.getNombre().equalsIgnoreCase(valor)) ||
-                (criterio.equalsIgnoreCase("correo") && cliente.getCorreo().equalsIgnoreCase(valor))) {
-                clientesEncontrados.add(cliente);
+    //17º metodo: permite al admin buscar clientes por nombre, verificando que el cliente exista previamente
+    public void buscarClientePorNombre(String nombre) {
+        for (Cliente clienteNombre : administrador.getClientes()) {
+            if (clienteNombre.getNombre().equalsIgnoreCase(nombre)) { // Compara el nombre del cliente con el proporcionado
+                System.out.println("Cliente encontrado: " + cliente.getNombre());
+                return; // Termina el método después de encontrar al cliente
             }
-        } return clientesEncontrados;
+        } System.out.println("Cliente no encontrado.");
+    }
+
+    //18º metodo: permite al admin buscar cientes en funcion de si son VIP o no, mostrando el nombre y el correo de los clientes VIP
+    public void buscarClientesPorVip(boolean esVip) {
+        for (Cliente clienteVIP : administrador.getClientes()) {
+            if (clienteVIP.esVip() == esVip) { 
+                System.out.println("Cliente: " + cliente.getNombre() + ", Correo: " + cliente.getCorreo());
+            }
+        }
     }
 }
