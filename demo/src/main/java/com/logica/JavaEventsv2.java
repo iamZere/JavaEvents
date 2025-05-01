@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class JavaEventsv2 {
 
     // Atributos
-    private ArrayList<Evento> reservaEventos;
+    private final ArrayList<Evento> reservaEventos;
     private Cliente cliente;
     private Administrador administrador;
     private TarjetaCredito tarjetaCredito;
