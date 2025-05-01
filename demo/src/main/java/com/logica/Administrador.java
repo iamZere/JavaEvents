@@ -30,16 +30,13 @@ public class Administrador{
     }
 
     // Gestion de eventos
-    public void crearEvento(Evento evento) {
-        // Lógica para crear un evento
+    public void crearEvento(Evento nuevoEvento) {
     }
 
-    public void eliminarEvento(Evento evento) {
-        // Lógica para eliminar un evento
+    public void eliminarEvento(Evento borrarEvento) {
     }
 
-    public void modificarEvento(Evento evento) {
-        // Lógica para modificar un evento
+    public void modificarEvento(Evento cambiarEvento) {
     }
 
     // Consulta de eventos

@@ -15,7 +15,7 @@ public class Evento implements Serializable {
     private String direccionImagen; // direccion de la imagen del evento
     private double calificacion; // calificacion del evento (1-5)
     private static final List<String> TIPOS_VALIDOS = List.of("Concierto", "Deporte", "Musical", "Teatro");
-    private String nombre; // nombre del evento para su búsqueda
+    private String nombre; // nombre del evento para su búsqueda por metodo palabra clave
 
     // Constructor
     public Evento(String titulo, String tipo, String descripcion, String lugar, List<LocalDateTime> fechas, double precio, String direccionImagen, double calificacion) {
