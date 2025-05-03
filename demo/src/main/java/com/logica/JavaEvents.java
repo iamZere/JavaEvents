@@ -201,7 +201,7 @@ public class JavaEvents {
     //16º metodo: permite al admin dar VIP a un cliente, verificando que el cliente exista previamente
     public void darVipCliente(Cliente cliente) {
         if (administrador.getClientes().contains(cliente)) { 
-            cliente.setEsVip(true); // Cambia el estado a VIP
+            cliente.setEsVip(true); // asigna el valor true al vip del cliente, modificado por el administrador
             System.out.println("Cliente VIP actualizado: " + cliente.getNombre());
         } else {
             System.out.println("El cliente no existe.");
@@ -212,8 +212,8 @@ public class JavaEvents {
     public void buscarClientePorNombre(String nombre) {
         for (Cliente clienteNombre : administrador.getClientes()) {
             if (clienteNombre.getNombre().equalsIgnoreCase(nombre)) { // Compara el nombre del cliente con el proporcionado
-                System.out.println("Cliente encontrado: " + cliente.getNombre());
-                return; // Termina el método después de encontrar al cliente
+                System.out.println("Cliente: " + cliente.getNombre() + ", Correo: " + cliente.getCorreo());
+                return; 
             }
         } System.out.println("Cliente no encontrado.");
     }
@@ -226,4 +226,6 @@ public class JavaEvents {
             }
         }
     }
+
+    //19º metodo:
 }
