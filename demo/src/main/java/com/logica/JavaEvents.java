@@ -236,17 +236,18 @@ public class JavaEvents {
         }
     }
 
-    //18º metodo: permite al admin buscar clientes por nombre, verificando que el cliente exista previamente
+    //18º metodo(extra): permite al admin buscar clientes por nombre, verificando que el cliente exista previamente
     public void buscarClientePorNombre(String nombre) {
         for (Cliente clienteNombre : administrador.getClientes()) {
-            if (clienteNombre.getNombre().equalsIgnoreCase(nombre)) { // Compara el nombre del cliente con el proporcionado
+            if (clienteNombre.getNombre().equalsIgnoreCase(nombre)) { //verifica que coincidan los nombres
+                System.out.println("Cliente encontrado:");
                 System.out.println("Cliente: " + cliente.getNombre() + ", Correo: " + cliente.getCorreo());
                 return; 
             }
         } System.out.println("Cliente no encontrado.");
     }
 
-    //19º metodo: permite al admin buscar cientes en funcion de si son VIP o no, mostrando el nombre y el correo de los clientes VIP
+    //19º metodo(extra): permite al admin buscar cientes en funcion de si son VIP o no, mostrando el nombre y el correo de los clientes VIP
     public void buscarClientesPorVip(boolean esVip) {
         for (Cliente clienteVIP : administrador.getClientes()) {
             if (clienteVIP.esVip() == esVip) { 
@@ -255,5 +256,28 @@ public class JavaEvents {
         }
     }
 
-    //20º metodo:
+    //20º metodo: permite al admin visualizar las reservas de todos los clientes de la aplicacion ordenadas por la fecha de la realizacion de la reserva (menor a mayor)
+    public void verReservas() {
+        ArrayList<ReservaEntradas> reservas = new ArrayList<>(); // Lista para almacenar todas las reservas
+        for (Cliente clienteReservas : administrador.getClientes()) { // Recorre todos los clientes
+            reservas.addAll(clienteReservas.getReservas()); // Añade las reservas de cada cliente a la lista
+        } 
+        reservas.sort((reserva1, reserva2) -> reserva1.getFecha().compareTo(reserva2.getFecha())); // Ordena las reservas por fecha
+        for (ReservaEntradas reserva : reservas) {
+            System.out.println("Reserva: " + reserva.toString());
+        }
+    }
+
+    //21º metodo(extra): dar la opcion al admin de seleccionar todas las reservas o solo a partir de una fecha especifica (fecha en la que se hizo la reserva)
+    public void verReservasDesdeFecha(LocalDateTime fechaDesde) {
+        ArrayList<ReservaEntradas> reservas = new ArrayList<>(); 
+        for (Cliente clienteReservas : administrador.getClientes()) { // recorre todos los clientes
+            reservas.addAll(clienteReservas.getReservas()); // añade las reservas de cada cliente a la lista
+        } 
+        for (ReservaEntradas reserva : reservas) {
+            if (LocalDateTime.parse(reserva.getFecha()).isAfter(fechaDesde)) { //el parse permite que .isAfter comprenda la fecha
+                System.out.println("Reserva: " + reserva.toString());
+            }
+        }
+    } 
 }
