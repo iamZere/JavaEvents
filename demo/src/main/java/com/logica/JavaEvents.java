@@ -1,5 +1,8 @@
 package com.logica;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -92,6 +95,15 @@ public class JavaEvents {
         } System.out.println("Fecha no disponible."); // No disponible si no coincide con ninguna fecha del evento
     }
 
+    //Antes de proceder con el pago, se da la opcion de elegir el numero de entradas a comprar 
+    public void seleccionarEntradas(int cantidadEntradas) {
+        if (cantidadEntradas > 0) { 
+            System.out.println("Cantidad de entradas seleccionadas: " + cantidadEntradas);
+        } else {
+            System.out.println("Error: La cantidad de entradas debe ser mayor que cero.");
+        }
+    }
+
     //8º metodo: permite procesar el pago con la tarjeta de credito, verificando si el importe es correcto y si la tarjeta es válida
     public void procesarPago(double precio) {
         if (cliente != null && cliente.esVip()) { 
@@ -111,7 +123,26 @@ public class JavaEvents {
         }
     }
 
-    //9º metodo: permite unicamente al administrador crear un evento, verificando que el evento no exista previamente
+    //9º metodo: la aplicacion guarda la reserva en el perfil del cliente, mostrando la información de la reserva   
+    public void guardarReserva(String evento, LocalDateTime fecha, int cantidadEntradas, double precio) {
+        String fechaFormateada = fecha.toString(); // Convierte LocalDateTime a String
+        ReservaEntradas nuevaReserva = new ReservaEntradas(evento, fechaFormateada, cantidadEntradas, precio); 
+        cliente.anadirReserva(nuevaReserva); 
+
+        // generacion de la factura
+        String factura = "Cliente: " + cliente.getNombre() + "\nEvento: " + evento + "\nFecha: " + fechaFormateada + "\nImporte: " + precio;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("factura.txt"))) { // crea un nuevo fichero de texto
+            writer.write(factura);
+        } catch (IOException e) {
+            System.out.println("Error al generar la factura: " + e.getMessage());
+        } System.out.println("Reserva guardada con éxito: " + nuevaReserva.toString()); 
+
+        // Almacenar los datos de la reserva (los que contiene la factura) en la aplicación para futuras consultas 
+        cliente.anadirReserva(new ReservaEntradas(evento, fechaFormateada, cantidadEntradas, precio));
+
+    }
+
+    //10º metodo: permite unicamente al administrador crear un evento, verificando que el evento no exista previamente
     public void crearEvento(Evento nuevoEvento) {
         for (Evento evento : reservaEventos) {
             if (evento.getTitulo().equals(nuevoEvento.getTitulo())) { // Verifica si el evento ya existe
@@ -122,7 +153,7 @@ public class JavaEvents {
         System.out.println("Evento creado con éxito: " + nuevoEvento.getTitulo());
     }
 
-    //10º metodo: permite al administrador eliminar un evento, verificando que el evento exista previamente
+    //11º metodo: permite al administrador eliminar un evento, verificando que el evento exista previamente
     public void eliminarEvento(Evento borrarEvento) {
         if (reservaEventos.remove(borrarEvento)) { // fuerza la eliminacion del evento, y si existe, procede, y si no, no hace nada
             System.out.println("Evento eliminado con éxito: " + borrarEvento.getTitulo());
@@ -131,7 +162,7 @@ public class JavaEvents {
         }
     }
 
-    //11º metodo: permite al administrador seleccionar un evento y modificar cualquier atributo del mismo, verificando que el evento exista previamente
+    //12º metodo: permite al administrador seleccionar un evento y modificar cualquier atributo del mismo, verificando que el evento exista previamente
     public void modificarEvento(Evento cambiarEvento, String nuevoTitulo, String nuevoTipo, String nuevaDescripcion, String nuevoLugar, ArrayList<LocalDateTime> nuevasFechas, double nuevoPrecio, String nuevaDireccionImagen) {
         for (Evento evento : reservaEventos) {
             if (evento.getTitulo().equals(cambiarEvento.getTitulo())) {
@@ -148,7 +179,7 @@ public class JavaEvents {
         } System.out.println("El evento no existe.");
     }
 
-    //12º metodo: permite al admin ver todos los eventos, mostrando su información
+    //13º metodo: permite al admin ver todos los eventos, mostrando su información
     public void verEventos() {
         for (Evento evento : reservaEventos) {
             System.out.println("Título: " + evento.getTitulo());
@@ -160,7 +191,7 @@ public class JavaEvents {
         }
     }
 
-    //13º metodo(extra): permite al admin ver eventos en funcion de su tipo, siendo Concierto, Deporte, Musical o Teatro las opciones posibles
+    //14º metodo(extra): permite al admin ver eventos en funcion de su tipo, siendo Concierto, Deporte, Musical o Teatro las opciones posibles
     public void verEventosPorTipo(String tipo) {
         for (Evento evento : reservaEventos) {
             if (evento.getTipo().equalsIgnoreCase(tipo)) { 
@@ -173,7 +204,7 @@ public class JavaEvents {
         }
     }
 
-    //14º metodo(extra): permite al admin ver eventos en funcion de la fecha del mismo, ordenando por fecha de menor a mayor
+    //15º metodo(extra): permite al admin ver eventos en funcion de la fecha del mismo, ordenando por fecha de menor a mayor
     public void verEventosPorFecha() {
         reservaEventos.sort((evento1, evento2) -> evento1.getFechas().get(0).compareTo(evento2.getFechas().get(0))); //ordena los eventos por la primera fecha disponible
         for (Evento evento : reservaEventos) {
@@ -185,7 +216,7 @@ public class JavaEvents {
         }
     }
 
-    //15º metodo: permite al admin ver todos los clientes, mostrando su información
+    //16º metodo: permite al admin ver todos los clientes, mostrando su información
     public void verClientes() {
         System.out.println("Clientes registrados:");
         ArrayList<Cliente> clientes = administrador.getClientes(); // muestra lista de clientes al admin
@@ -198,7 +229,7 @@ public class JavaEvents {
         }
     }
 
-    //16º metodo: permite al admin dar VIP a un cliente, verificando que el cliente exista previamente
+    //17º metodo: permite al admin dar VIP a un cliente, verificando que el cliente exista previamente
     public void darVipCliente(Cliente cliente) {
         if (administrador.getClientes().contains(cliente)) { 
             cliente.setEsVip(true); // asigna el valor true al vip del cliente, modificado por el administrador
@@ -208,7 +239,7 @@ public class JavaEvents {
         }
     }
 
-    //17º metodo: permite al admin buscar clientes por nombre, verificando que el cliente exista previamente
+    //18º metodo: permite al admin buscar clientes por nombre, verificando que el cliente exista previamente
     public void buscarClientePorNombre(String nombre) {
         for (Cliente clienteNombre : administrador.getClientes()) {
             if (clienteNombre.getNombre().equalsIgnoreCase(nombre)) { // Compara el nombre del cliente con el proporcionado
@@ -218,7 +249,7 @@ public class JavaEvents {
         } System.out.println("Cliente no encontrado.");
     }
 
-    //18º metodo: permite al admin buscar cientes en funcion de si son VIP o no, mostrando el nombre y el correo de los clientes VIP
+    //19º metodo: permite al admin buscar cientes en funcion de si son VIP o no, mostrando el nombre y el correo de los clientes VIP
     public void buscarClientesPorVip(boolean esVip) {
         for (Cliente clienteVIP : administrador.getClientes()) {
             if (clienteVIP.esVip() == esVip) { 
@@ -227,5 +258,5 @@ public class JavaEvents {
         }
     }
 
-    //19º metodo:
+    //20º metodo:
 }
