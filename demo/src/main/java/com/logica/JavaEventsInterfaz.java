@@ -2,7 +2,7 @@ package com.logica;
 
 import java.util.ArrayList;
 
-public class JavaEventsv2 {
+public class JavaEventsInterfaz {
 
     // Atributos
     private final ArrayList<Evento> reservaEventos;
@@ -11,7 +11,7 @@ public class JavaEventsv2 {
     private TarjetaCredito tarjetaCredito;
 
     // Constructor
-    public JavaEventsv2(ArrayList<Evento> reservaEventos) {
+    public JavaEventsInterfaz(ArrayList<Evento> reservaEventos) {
         this.reservaEventos = reservaEventos;
     }
 
