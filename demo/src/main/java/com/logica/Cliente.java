@@ -1,7 +1,7 @@
 package com.logica;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Cliente {
 
@@ -10,16 +10,18 @@ public class Cliente {
     private String clave;//Clave del cliente
     private String telefono;//Telefono asociado al cliente
     private Boolean esVip;//Indica si el cliente es parte del grupo VIP o no
-    private List<Reserva> reservas;//Lista de reservas asociadas al cliente
+    private final List<ReservaEntradas> reservas;//Lista de reservas asociadas al cliente
+    private Direccion direccion;//Direccion asociada al cliente
 
     // Constructor
-    public Cliente(String nombre, String correo, String clave, String telefono) {
+    public Cliente(String nombre, String correo, String clave, String telefono, Direccion direccion) {
         this.nombre = nombre;
         this.correo = correo;
         this.clave = clave;
         this.telefono = telefono;
         this.reservas = new ArrayList<>();//Crea una lista vacia de reservas para el cliente
         this.esVip = false; //De manera predeterminada, todos los usuarios NO forman parte del grupo VIP
+        this.direccion = direccion;
     }
 
     public String getNombre() {
@@ -62,12 +64,20 @@ public class Cliente {
         this.esVip = esVip;
     }
 
-    public List<Reserva> getReservas() {
+    public List<ReservaEntradas> getReservas() {
         return reservas;
     }
 
-    public void anadirReserva(Reserva reserva) {
+    public void anadirReserva(ReservaEntradas reserva) {
         reservas.add(reserva);//Anade una reserva a la lista de reservas del cliente
+    }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
     }
 
     @Override

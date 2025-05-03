@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class JavaEvents {
 
@@ -13,9 +14,11 @@ public class JavaEvents {
     private final Cliente cliente;
     private final Administrador administrador;
     private final TarjetaCredito tarjetaCredito;
+    private final Direccion direccion;
 
     // Constructor
-    public JavaEvents(ArrayList<Evento> reservaEventos, Cliente cliente, Administrador administrador, TarjetaCredito tarjetaCredito) {
+    public JavaEvents(ArrayList<Evento> reservaEventos, Cliente cliente, Administrador administrador, TarjetaCredito tarjetaCredito, Direccion direccion) {
+        this.direccion = direccion;
         this.cliente = cliente;
         this.reservaEventos = reservaEventos;
         this.administrador = administrador;
@@ -275,9 +278,58 @@ public class JavaEvents {
             reservas.addAll(clienteReservas.getReservas()); // añade las reservas de cada cliente a la lista
         } 
         for (ReservaEntradas reserva : reservas) {
-            if (LocalDateTime.parse(reserva.getFecha()).isAfter(fechaDesde)) { //el parse permite que .isAfter comprenda la fecha
+            if (LocalDateTime.parse(reserva.getFecha()).isAfter(fechaDesde)) { //el parse (formatea la fecha) permite que .isAfter comprenda la misma
                 System.out.println("Reserva: " + reserva.toString());
             }
         }
-    } 
+    }
+
+    //22º y 23º metodo: permite al cliente registrarse en la aplicacion, y si ya esta registrado, podra iniciar sesion con su correo y clave
+    public void iniciarSesion(String correo, String clave) {
+        for (Cliente clienteRegistrado : administrador.getClientes()) {
+            if (clienteRegistrado.getCorreo().equals(correo) && clienteRegistrado.getClave().equals(clave)) { 
+                System.out.println("Inicio de sesión exitoso. Bienvenido, " + clienteRegistrado.getNombre() + "!");
+                return;
+            }
+        } System.out.println("Error: Correo o clave incorrectos.");
+    }
+
+    public void registrarCliente(String nombre, String correo, String clave, String telefono) {
+        for (Cliente clienteRegistrado : administrador.getClientes()) { // verifica si el cliente ya tiene una cuenta
+            if (clienteRegistrado.getCorreo().equals(correo)) { 
+                System.out.println("El cliente ya está registrado.");
+                return;
+            } 
+            Cliente nuevoCliente = new Cliente(nombre, correo, clave, telefono, direccion); 
+            administrador.getClientes().add(nuevoCliente); // lo añade a la lista de clientes de la app
+            System.out.println("Cliente registrado con éxito. Bienvenido, " + nuevoCliente.getNombre());
+        }
+    }
+
+    //24º metodo: permite al cliente dar una reseña al evento entre 1 y 5, siempre y cuando haya asistido al evento. (Extra)Tambien puede añadir un comentario
+    public void darResenaEvento(Evento evento, int calificacion, String comentario) {
+        evento.setCalificacion(calificacion); 
+        System.out.println("Reseña añadida: " + comentario + " - Calificación: " + calificacion);
+    }
+
+    //25º metodo: permite al cliente consultar sus reservas, mostrando la información de cada reserva
+    public void consultarReservas() {
+        List<ReservaEntradas> reservas = cliente.getReservas(); // obtiene la lista de reservas del cliente
+        if (reservas.isEmpty()) { 
+            System.out.println("Aún no tienes reservas.");
+        } else {
+            for (ReservaEntradas reserva : reservas) {
+                System.out.println(reserva.toString());
+            }
+        }
+    }
+
+    //26º metodo: permite al cliente modificar todos sus datos personales 
+    public void modificarDatosPersonales(String nuevoNombre, String nuevoCorreo, String nuevaClave, String nuevoTelefono, Direccion nuevaDireccion) {
+        cliente.setNombre(nuevoNombre); 
+        cliente.setCorreo(nuevoCorreo); 
+        cliente.setClave(nuevaClave); 
+        cliente.setTelefono(nuevoTelefono);
+        cliente.setDireccion(nuevaDireccion);
+    }
 }
