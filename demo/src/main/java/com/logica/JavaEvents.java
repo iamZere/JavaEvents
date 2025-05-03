@@ -125,7 +125,8 @@ public class JavaEvents {
 
     //9º metodo: la aplicacion guarda la reserva en el perfil del cliente, mostrando la información de la reserva   
     public void guardarReserva(String evento, LocalDateTime fecha, int cantidadEntradas, double precio) {
-        String fechaFormateada = fecha.toString(); // Convierte LocalDateTime a String
+        String fechaFormateada = fecha.toString();
+        // Almacenar los datos de la reserva (los que contiene la factura) en la aplicación para futuras consultas
         ReservaEntradas nuevaReserva = new ReservaEntradas(evento, fechaFormateada, cantidadEntradas, precio); 
         cliente.anadirReserva(nuevaReserva); 
 
@@ -136,10 +137,6 @@ public class JavaEvents {
         } catch (IOException e) {
             System.out.println("Error al generar la factura: " + e.getMessage());
         } System.out.println("Reserva guardada con éxito: " + nuevaReserva.toString()); 
-
-        // Almacenar los datos de la reserva (los que contiene la factura) en la aplicación para futuras consultas 
-        cliente.anadirReserva(new ReservaEntradas(evento, fechaFormateada, cantidadEntradas, precio));
-
     }
 
     //10º metodo: permite unicamente al administrador crear un evento, verificando que el evento no exista previamente
