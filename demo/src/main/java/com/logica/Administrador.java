@@ -34,10 +34,4 @@ public class Administrador{
     public ArrayList<Cliente> getClientes() {
         return clientes;
     }
-
-    // Consulta de reservas
-    public void verReservas() {
-        // Lógica para ver reservas (tienen que estar ordenadas por fecha)
-    }
-    // Opcion volutaria - seleccionar todas las reservas o solo a partir de una fecha específica (fecha en la que se hizo la reserva)
 }
