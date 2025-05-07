@@ -424,7 +424,52 @@ public class JavaEventsInterfaz {
         });
     }
 
+    //15º metodo(extra): permite al admin ver eventos en funcion de la fecha del mismo, ordenando por fecha de menor a mayor (adaptado para una interfaz de desarrollo con Maven-Swing)
+    public void verEventosPorFechaSwing() {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Eventos por Fecha");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(20, 40);
+            textArea.setEditable(false);
 
+            reservaEventos.sort((evento1, evento2) -> evento1.getFechas().get(0).compareTo(evento2.getFechas().get(0))); // Ordena los eventos por la primera fecha disponible
+            for (Evento evento : reservaEventos) {
+                textArea.append("Título: " + evento.getTitulo() + "\n");
+                textArea.append("Descripción: " + evento.getDescripcion() + "\n");
+                textArea.append("Lugar: " + evento.getLugar() + "\n");
+                textArea.append("Fechas disponibles: " + evento.getFechas() + "\n");
+                textArea.append("Precio: " + evento.getPrecio() + "\n\n");
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //16º metodo: permite al admin ver todos los clientes, mostrando su información (adaptado para una interfaz de desarrollo con Maven-Swing)
+    public void verClientesSwing() {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Clientes Registrados");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(20, 40);
+            textArea.setEditable(false);
+
+            textArea.append("Clientes registrados:\n\n");
+            ArrayList<Cliente> clientes = administrador.getClientes(); // Muestra lista de clientes al admin
+            for (Cliente clienteVer : clientes) {
+                textArea.append("Nombre: " + clienteVer.getNombre() + "\n");
+                textArea.append("Correo: " + clienteVer.getCorreo() + "\n");
+                textArea.append("Teléfono: " + clienteVer.getTelefono() + "\n");
+                textArea.append("VIP: " + (clienteVer.esVip() ? "Sí" : "No") + "\n");
+                textArea.append("Reservas: " + clienteVer.getReservas().size() + "\n\n");
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
 
 
 }
