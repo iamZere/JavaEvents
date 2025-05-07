@@ -1,5 +1,6 @@
 package com.logica;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 public class JavaEventsInterfaz {
 
@@ -102,6 +103,126 @@ public class JavaEventsInterfaz {
             javax.swing.JFrame frame = new javax.swing.JFrame("Eventos por Precio Descendente");
             javax.swing.JTextArea textArea = new javax.swing.JTextArea(20, 40);
             eventosOrdenados.forEach(evento -> textArea.append(evento.toString() + "\n"));
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //6º metodo: permite seleccionar el evento deseado y muestra su información (adaptado para una interfaz de desarrollo con Maven-Swing)
+    public void seleccionarYMostrarEventoPorTituloSwing(String titulo) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Información del Evento");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(20, 40);
+            boolean eventoEncontrado = false;
+
+            for (Evento evento : reservaEventos) {
+                if (evento.getTitulo().equals(titulo)) {
+                    textArea.append("Título: " + evento.getTitulo() + "\n");
+                    textArea.append("Tipo: " + evento.getTipo() + "\n");
+                    textArea.append("Descripción: " + evento.getDescripcion() + "\n");
+                    textArea.append("Lugar: " + evento.getLugar() + "\n");
+                    textArea.append("Fechas disponibles: " + evento.getFechas() + "\n");
+                    textArea.append("Precio: " + evento.getPrecio() + "\n");
+                    textArea.append("Calificación: " + evento.getCalificacion() + "\n");
+                    eventoEncontrado = true;
+                    break;
+                }
+            }
+
+            if (!eventoEncontrado) {
+                textArea.append("Evento no encontrado.");
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //7º metodo: permite seleccionar las fechas disponibles del evento ya seleccionado anteriormente (adaptado para una interfaz de desarrollo con Maven-Swing)
+    public void seleccionarFechaSwing(LocalDateTime fecha) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Selección de Fecha");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(20, 40);
+            boolean fechaEncontrada = false;
+
+            for (Evento evento : reservaEventos) {
+                if (evento.getFechas().contains(fecha)) {
+                    textArea.append("Fecha seleccionada: " + fecha + "\n");
+                    fechaEncontrada = true;
+                    break;
+                }
+            }
+
+            if (!fechaEncontrada) {
+                textArea.append("Fecha no disponible.");
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    // Antes de proceder con el pago, se da la opción de elegir el número de entradas a comprar (adaptado para una interfaz de desarrollo con Maven-Swing)
+    public void seleccionarEntradasSwing() {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Seleccionar Entradas");
+            javax.swing.JPanel panel = new javax.swing.JPanel();
+            javax.swing.JLabel label = new javax.swing.JLabel("Cantidad de entradas:");
+            javax.swing.JTextField textField = new javax.swing.JTextField(10);
+            javax.swing.JButton button = new javax.swing.JButton("Confirmar");
+
+            button.addActionListener(e -> {
+                try {
+                    int cantidadEntradas = Integer.parseInt(textField.getText());
+                    if (cantidadEntradas > 0) {
+                        javax.swing.JOptionPane.showMessageDialog(frame, "Cantidad de entradas seleccionadas: " + cantidadEntradas);
+                    } else {
+                        javax.swing.JOptionPane.showMessageDialog(frame, "Error: La cantidad de entradas debe ser mayor que cero.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (NumberFormatException ex) {
+                    javax.swing.JOptionPane.showMessageDialog(frame, "Error: Introduzca un número válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            });
+
+            panel.add(label);
+            panel.add(textField);
+            panel.add(button);
+            frame.add(panel);
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    // 8º método: permite procesar el pago con la tarjeta de crédito, verificando si el importe es correcto y si la tarjeta es válida (adaptado para una interfaz de desarrollo con Maven-Swing)
+    public void procesarPagoSwing(double precio) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Procesar Pago");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(10, 40);
+            textArea.setEditable(false);
+
+            if (cliente != null && cliente.esVip()) {
+                final double precioConDescuento = precio * 0.9; // Aplica un descuento del 10%
+                textArea.append("Descuento VIP aplicado. Nuevo importe: " + precioConDescuento + "€.\n");
+            }
+
+            if (tarjetaCredito != null && precio > 0) {
+                textArea.append("Procesando pago con tarjeta de crédito: " + tarjetaCredito.getNumeroTarjeta() + "\n");
+                textArea.append("Pago procesado con éxito. Importe: " + precio + "€.\n");
+            } else if (tarjetaCredito == null) {
+                textArea.append("Error: La tarjeta de crédito no puede estar vacía.\n");
+            } else if (precio <= 0) {
+                textArea.append("Error: El importe debe ser mayor que cero.\n");
+            } else {
+                textArea.append("Error en el pago. Verifique los datos de la tarjeta y el importe.\n");
+            }
+
             frame.add(new javax.swing.JScrollPane(textArea));
             frame.pack();
             frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
