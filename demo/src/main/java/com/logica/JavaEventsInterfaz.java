@@ -1,14 +1,17 @@
 package com.logica;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 public class JavaEventsInterfaz {
 
     // Atributos
     private final ArrayList<Evento> reservaEventos;
-    private Cliente cliente;
-    private Administrador administrador;
-    private TarjetaCredito tarjetaCredito;
+    private final Cliente cliente;
+    private final Administrador administrador;
+    private final TarjetaCredito tarjetaCredito;
     private final Direccion direccion;
 
     // Constructor
@@ -230,7 +233,153 @@ public class JavaEventsInterfaz {
         });
     }
 
-    //12º metodo: permite al admin ver todos los eventos, mostrando su información
+    //9º metodo: la aplicacion guarda la reserva en el perfil del cliente, mostrando la información de la reserva   
+    public void guardarReservaSwing(String evento, LocalDateTime fecha, int cantidadEntradas, double precio) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Guardar Reserva");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(20, 40);
+            textArea.setEditable(false);
+
+            String fechaFormateada = fecha.toString();
+            ReservaEntradas nuevaReserva = new ReservaEntradas(evento, fechaFormateada, cantidadEntradas, precio);
+            cliente.anadirReserva(nuevaReserva);
+
+            String factura = "Cliente: " + cliente.getNombre() + "\nEvento: " + evento + "\nFecha: " + fechaFormateada + "\nImporte: " + precio;
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("factura.txt"))) {
+                writer.write(factura);
+            } catch (IOException e) {
+                textArea.append("Error al generar la factura: " + e.getMessage() + "\n");
+            }
+
+            textArea.append("Reserva guardada con éxito:\n" + nuevaReserva.toString() + "\n");
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //10º metodo: permite unicamente al administrador crear un evento, verificando que el evento no exista previamente
+    public void crearEventoSwing(Evento nuevoEvento) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Crear Evento");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(20, 40);
+            textArea.setEditable(false);
+
+            boolean eventoExiste = reservaEventos.stream()
+                                                 .anyMatch(evento -> evento.getTitulo().equals(nuevoEvento.getTitulo()));
+
+            if (eventoExiste) {
+                textArea.append("El evento ya existe.\n");
+            } else {
+                reservaEventos.add(nuevoEvento);
+                textArea.append("Evento creado con éxito: " + nuevoEvento.getTitulo() + "\n");
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //11º metodo: permite al administrador eliminar un evento, verificando que el evento exista previamente (adaptado para una interfaz de desarrollo con Maven-Swing)
+    public void eliminarEventoSwing(Evento borrarEvento) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Eliminar Evento");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(20, 40);
+            textArea.setEditable(false);
+
+            if (reservaEventos.remove(borrarEvento)) { // Fuerza la eliminación del evento si existe
+                textArea.append("Evento eliminado con éxito: " + borrarEvento.getTitulo() + "\n");
+            } else {
+                textArea.append("El evento no existe.\n");
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //12º metodo: permite al administrador seleccionar un evento y modificar cualquier atributo del mismo, verificando que el evento exista previamente (adaptado para una interfaz de desarrollo con Maven-Swing)
+    public void modificarEventoSwing(Evento cambiarEvento) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Modificar Evento");
+            javax.swing.JPanel panel = new javax.swing.JPanel();
+            panel.setLayout(new java.awt.GridLayout(8, 2));
+
+            javax.swing.JTextField tituloField = new javax.swing.JTextField(cambiarEvento.getTitulo());
+            javax.swing.JTextField tipoField = new javax.swing.JTextField(cambiarEvento.getTipo());
+            javax.swing.JTextField descripcionField = new javax.swing.JTextField(cambiarEvento.getDescripcion());
+            javax.swing.JTextField lugarField = new javax.swing.JTextField(cambiarEvento.getLugar());
+            javax.swing.JTextField fechasField = new javax.swing.JTextField(cambiarEvento.getFechas().toString());
+            javax.swing.JTextField precioField = new javax.swing.JTextField(String.valueOf(cambiarEvento.getPrecio()));
+            javax.swing.JTextField direccionImagenField = new javax.swing.JTextField(cambiarEvento.getDireccionImagen());
+
+            panel.add(new javax.swing.JLabel("Título:"));
+            panel.add(tituloField);
+            panel.add(new javax.swing.JLabel("Tipo:"));
+            panel.add(tipoField);
+            panel.add(new javax.swing.JLabel("Descripción:"));
+            panel.add(descripcionField);
+            panel.add(new javax.swing.JLabel("Lugar:"));
+            panel.add(lugarField);
+            panel.add(new javax.swing.JLabel("Fechas (separadas por comas):"));
+            panel.add(fechasField);
+            panel.add(new javax.swing.JLabel("Precio:"));
+            panel.add(precioField);
+            panel.add(new javax.swing.JLabel("Dirección Imagen:"));
+            panel.add(direccionImagenField);
+
+            javax.swing.JButton modificarButton = new javax.swing.JButton("Modificar");
+            modificarButton.addActionListener(e -> {
+                try {
+                    String nuevoTitulo = tituloField.getText();
+                    String nuevoTipo = tipoField.getText();
+                    String nuevaDescripcion = descripcionField.getText();
+                    String nuevoLugar = lugarField.getText();
+                    ArrayList<LocalDateTime> nuevasFechas = new ArrayList<>();
+                    for (String fecha : fechasField.getText().split(",")) {
+                        nuevasFechas.add(LocalDateTime.parse(fecha.trim()));
+                    }
+                    double nuevoPrecio = Double.parseDouble(precioField.getText());
+                    String nuevaDireccionImagen = direccionImagenField.getText();
+
+                    boolean eventoEncontrado = false;
+                    for (Evento evento : reservaEventos) {
+                        if (evento.getTitulo().equals(cambiarEvento.getTitulo())) {
+                            evento.setTitulo(nuevoTitulo);
+                            evento.setTipo(nuevoTipo);
+                            evento.setDescripcion(nuevaDescripcion);
+                            evento.setLugar(nuevoLugar);
+                            evento.setFechas(nuevasFechas);
+                            evento.setPrecio(nuevoPrecio);
+                            evento.setDireccionImagen(nuevaDireccionImagen);
+                            eventoEncontrado = true;
+                            javax.swing.JOptionPane.showMessageDialog(frame, "Evento modificado con éxito: " + nuevoTitulo);
+                            break;
+                        }
+                    }
+
+                    if (!eventoEncontrado) {
+                        javax.swing.JOptionPane.showMessageDialog(frame, "El evento no existe.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (NumberFormatException | java.time.format.DateTimeParseException ex) {
+                    javax.swing.JOptionPane.showMessageDialog(frame, "Error en el formato de los datos: " + ex.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    }
+            });
+
+            frame.add(panel, java.awt.BorderLayout.CENTER);
+            frame.add(modificarButton, java.awt.BorderLayout.SOUTH);
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //13º metodo: permite al admin ver todos los eventos, mostrando su información
     public String verEventos() {
     StringBuilder eventosInfo = new StringBuilder();
     for (Evento evento : reservaEventos) {
@@ -242,6 +391,40 @@ public class JavaEventsInterfaz {
                    .append("Precio: ").append(evento.getPrecio()).append("\n")
                    .append("Calificación: ").append(evento.getCalificacion()).append("\n\n");
                    }
-    return eventosInfo.toString(); // Devuelve la información como un String
+    return eventosInfo.toString(); 
     }
+
+    //14º metodo(extra): permite al admin ver eventos en funcion de su tipo, siendo Concierto, Deporte, Musical o Teatro las opciones posibles (adaptado para una interfaz de desarrollo con Maven-Swing)
+    public void verEventosPorTipoSwing(String tipo) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Eventos por Tipo");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(20, 40);
+            textArea.setEditable(false);
+
+            boolean eventosEncontrados = false;
+            for (Evento evento : reservaEventos) {
+                if (evento.getTipo().equalsIgnoreCase(tipo)) {
+                    textArea.append("Título: " + evento.getTitulo() + "\n");
+                    textArea.append("Descripción: " + evento.getDescripcion() + "\n");
+                    textArea.append("Lugar: " + evento.getLugar() + "\n");
+                    textArea.append("Fechas disponibles: " + evento.getFechas() + "\n");
+                    textArea.append("Precio: " + evento.getPrecio() + "\n\n");
+                    eventosEncontrados = true;
+                }
+            }
+
+            if (!eventosEncontrados) {
+                textArea.append("No se encontraron eventos del tipo: " + tipo + "\n");
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+
+
+
 }
