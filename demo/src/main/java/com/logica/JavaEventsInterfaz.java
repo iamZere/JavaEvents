@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 public class JavaEventsInterfaz {
 
     // Atributos
@@ -471,5 +472,303 @@ public class JavaEventsInterfaz {
         });
     }
 
-    
+    //17º metodo: permite al admin dar VIP a un cliente, verificando que el cliente exista previamente (adaptado para una interfaz de desarrollo con Maven-Swing)
+    public void darVipClienteSwing(Cliente cliente) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Dar VIP a Cliente");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(10, 40);
+            textArea.setEditable(false);
+
+            if (administrador.getClientes().contains(cliente)) {
+                cliente.setEsVip(true); // Asigna el valor true al VIP del cliente
+                textArea.append("Cliente VIP actualizado: " + cliente.getNombre() + "\n");
+            } else {
+                textArea.append("El cliente no existe.\n");
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //18º metodo(extra): permite al admin buscar clientes por nombre, verificando que el cliente exista previamente (adaptado para una interfaz de desarrollo con Maven-Swing)
+    public void buscarClientePorNombreSwing(String nombre) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Buscar Cliente por Nombre");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(10, 40);
+            textArea.setEditable(false);
+
+            boolean clienteEncontrado = false;
+            for (Cliente clienteNombre : administrador.getClientes()) {
+                if (clienteNombre.getNombre().equalsIgnoreCase(nombre)) {
+                    textArea.append("Cliente encontrado:\n");
+                    textArea.append("Nombre: " + clienteNombre.getNombre() + "\n");
+                    textArea.append("Correo: " + clienteNombre.getCorreo() + "\n");
+                    clienteEncontrado = true;
+                    break;
+                }
+            }
+
+            if (!clienteEncontrado) {
+                textArea.append("Cliente no encontrado.\n");
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //19º metodo(extra): permite al admin buscar clientes en función de si son VIP o no, mostrando el nombre y el correo de los clientes VIP (adaptado para una interfaz de desarrollo con Maven-Swing)
+    public void buscarClientesPorVipSwing(boolean esVip) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Buscar Clientes por VIP");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(20, 40);
+            textArea.setEditable(false);
+
+            boolean clientesEncontrados = false;
+            for (Cliente clienteVIP : administrador.getClientes()) {
+                if (clienteVIP.esVip() == esVip) {
+                    textArea.append("Nombre: " + clienteVIP.getNombre() + "\n");
+                    textArea.append("Correo: " + clienteVIP.getCorreo() + "\n\n");
+                    clientesEncontrados = true;
+                }
+            }
+
+            if (!clientesEncontrados) {
+                textArea.append("No se encontraron clientes " + (esVip ? "VIP." : "no VIP.") + "\n");
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //20º metodo: permite al admin visualizar las reservas de todos los clientes de la aplicacion ordenadas por la fecha de la realizacion de la reserva (menor a mayor)
+    public void verReservasSwing() {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Reservas de Clientes");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(20, 40);
+            textArea.setEditable(false);
+
+            ArrayList<ReservaEntradas> reservas = new ArrayList<>();
+            for (Cliente clienteReservas : administrador.getClientes()) {
+                reservas.addAll(clienteReservas.getReservas());
+            }
+            reservas.sort((reserva1, reserva2) -> reserva1.getFecha().compareTo(reserva2.getFecha()));
+
+            for (ReservaEntradas reserva : reservas) {
+                textArea.append("Reserva: " + reserva.toString() + "\n");
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //21º metodo(extra): dar la opcion al admin de seleccionar todas las reservas o solo a partir de una fecha especifica (fecha en la que se hizo la reserva)
+    public void verReservasDesdeFechaSwing(LocalDateTime fechaDesde) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Reservas desde Fecha");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(20, 40);
+            textArea.setEditable(false);
+
+            ArrayList<ReservaEntradas> reservas = new ArrayList<>();
+            for (Cliente clienteReservas : administrador.getClientes()) {
+                reservas.addAll(clienteReservas.getReservas());
+            }
+
+            for (ReservaEntradas reserva : reservas) {
+                if (LocalDateTime.parse(reserva.getFecha()).isAfter(fechaDesde)) {
+                    textArea.append("Reserva: " + reserva.toString() + "\n");
+                }
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //22º y 23º metodo: permite al cliente registrarse en la aplicacion, y si ya esta registrado, podra iniciar sesion con su correo y clave
+    public void iniciarSesionSwing(String correo, String clave) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Iniciar Sesión");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(10, 40);
+            textArea.setEditable(false);
+
+            boolean inicioExitoso = false;
+            for (Cliente clienteRegistrado : administrador.getClientes()) {
+                if (clienteRegistrado.getCorreo().equals(correo) && clienteRegistrado.getClave().equals(clave)) {
+                    textArea.append("Inicio de sesión exitoso. Bienvenido, " + clienteRegistrado.getNombre() + "!\n");
+                    inicioExitoso = true;
+                    break;
+                }
+            }
+
+            if (!inicioExitoso) {
+                textArea.append("Error: Correo o clave incorrectos.\n");
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    public void registrarClienteSwing(String nombre, String correo, String clave, String telefono) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Registrar Cliente");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(10, 40);
+            textArea.setEditable(false);
+
+            boolean clienteExiste = false;
+            for (Cliente clienteRegistrado : administrador.getClientes()) {
+                if (clienteRegistrado.getCorreo().equals(correo)) {
+                    textArea.append("El cliente ya está registrado.\n");
+                    clienteExiste = true;
+                    break;
+                }
+            }
+
+            if (!clienteExiste) {
+                Cliente nuevoCliente = new Cliente(nombre, correo, clave, telefono, direccion);
+                administrador.getClientes().add(nuevoCliente);
+                textArea.append("Cliente registrado con éxito. Bienvenido, " + nuevoCliente.getNombre() + "!\n");
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //24º metodo: permite al cliente dar una reseña al evento entre 1 y 5, siempre y cuando haya asistido al evento. (Extra)Tambien puede añadir un comentario
+    public void darResenaEventoSwing(Evento evento) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Dar Reseña al Evento");
+            javax.swing.JPanel panel = new javax.swing.JPanel();
+            panel.setLayout(new java.awt.GridLayout(3, 2));
+
+            javax.swing.JLabel calificacionLabel = new javax.swing.JLabel("Calificación (1-5):");
+            javax.swing.JTextField calificacionField = new javax.swing.JTextField();
+            javax.swing.JLabel comentarioLabel = new javax.swing.JLabel("Comentario:");
+            javax.swing.JTextField comentarioField = new javax.swing.JTextField();
+            javax.swing.JButton enviarButton = new javax.swing.JButton("Enviar");
+
+            enviarButton.addActionListener(e -> {
+                try {
+                    int calificacion = Integer.parseInt(calificacionField.getText());
+                    if (calificacion < 1 || calificacion > 5) {
+                        javax.swing.JOptionPane.showMessageDialog(frame, "La calificación debe estar entre 1 y 5.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    String comentario = comentarioField.getText();
+                    evento.setCalificacion(calificacion);
+                    javax.swing.JOptionPane.showMessageDialog(frame, "Reseña añadida con éxito: " + comentario + " - Calificación: " + calificacion);
+                    frame.dispose();
+                } catch (NumberFormatException ex) {
+                    javax.swing.JOptionPane.showMessageDialog(frame, "Error: Introduzca un número válido para la calificación.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            });
+
+            panel.add(calificacionLabel);
+            panel.add(calificacionField);
+            panel.add(comentarioLabel);
+            panel.add(comentarioField);
+            panel.add(enviarButton);
+
+            frame.add(panel);
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //25º metodo: permite al cliente consultar sus reservas, mostrando la información de cada reserva
+    public void consultarReservasSwing() {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Consultar Reservas");
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(20, 40);
+            textArea.setEditable(false);
+
+            List<ReservaEntradas> reservas = cliente.getReservas();
+            if (reservas.isEmpty()) {
+                textArea.append("Aún no tienes reservas.\n");
+            } else {
+                for (ReservaEntradas reserva : reservas) {
+                    textArea.append(reserva.toString() + "\n");
+                }
+            }
+
+            frame.add(new javax.swing.JScrollPane(textArea));
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+
+    //26º metodo: permite al cliente modificar todos sus datos personales
+    public void modificarDatosPersonalesSwing() {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            javax.swing.JFrame frame = new javax.swing.JFrame("Modificar Datos Personales");
+            javax.swing.JPanel panel = new javax.swing.JPanel();
+            panel.setLayout(new java.awt.GridLayout(5, 2));
+
+            javax.swing.JTextField nombreField = new javax.swing.JTextField(cliente.getNombre());
+            javax.swing.JTextField correoField = new javax.swing.JTextField(cliente.getCorreo());
+            javax.swing.JTextField claveField = new javax.swing.JTextField(cliente.getClave());
+            javax.swing.JTextField telefonoField = new javax.swing.JTextField(cliente.getTelefono());
+            javax.swing.JTextField direccionField = new javax.swing.JTextField(cliente.getDireccion().toString());
+
+            panel.add(new javax.swing.JLabel("Nombre:"));
+            panel.add(nombreField);
+            panel.add(new javax.swing.JLabel("Correo:"));
+            panel.add(correoField);
+            panel.add(new javax.swing.JLabel("Clave:"));
+            panel.add(claveField);
+            panel.add(new javax.swing.JLabel("Teléfono:"));
+            panel.add(telefonoField);
+            panel.add(new javax.swing.JLabel("Dirección:"));
+            panel.add(direccionField);
+
+            javax.swing.JButton modificarButton = new javax.swing.JButton("Modificar");
+            modificarButton.addActionListener(e -> {
+                try {
+                    String nuevoNombre = nombreField.getText();
+                    String nuevoCorreo = correoField.getText();
+                    String nuevaClave = claveField.getText();
+                    String nuevoTelefono = telefonoField.getText();
+                    Direccion nuevaDireccion = Direccion.parseDireccion(direccionField.getText());
+
+                    cliente.setNombre(nuevoNombre);
+                    cliente.setCorreo(nuevoCorreo);
+                    cliente.setClave(nuevaClave);
+                    cliente.setTelefono(nuevoTelefono);
+                    cliente.setDireccion(nuevaDireccion);
+
+                    javax.swing.JOptionPane.showMessageDialog(frame, "Datos personales modificados con éxito.");
+                    frame.dispose();
+                } catch (IllegalArgumentException | NullPointerException ex) {
+                    javax.swing.JOptionPane.showMessageDialog(frame, "Error al modificar los datos: " + ex.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            });
+
+            frame.add(panel, java.awt.BorderLayout.CENTER);
+            frame.add(modificarButton, java.awt.BorderLayout.SOUTH);
+            frame.pack();
+            frame.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
 }
