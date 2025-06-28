@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>JavaEvents</title>
 </head>
 <body>
   <h1>JavaEvents</h1>
