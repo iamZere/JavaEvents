@@ -21,7 +21,7 @@
 
   <h2>👥 Authors</h2>
   <p>
-    Developed by <strong>iamZere</strong> and <strong>David17es</strong> in 2025.
+    Developed by <strong>iamZere</strong> and <strong>David17es</strong> in 2025 using <strong>Apache NetBeans</strong>.
   </p>
   <p>
     📧 Contact:<br />
